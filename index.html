@@ -868,19 +868,19 @@
         <div class="section-heading center">
           <p class="section-label">Qualitative Examples</p>
           <h2>Side-by-side: query grids and model predictions</h2>
-          <p>Each example shows the input grid alongside predictions from representative models across different evaluation protocols.</p>
+          <p>Each example shows the input grid with its protocol-specific query alongside predictions from representative models. Visual Referring examples use images with a red bounding box highlighting a specific panel.</p>
         </div>
 
-        <!-- Example 1: Detection MCQ — Modality mismatch (2×2) -->
+        <!-- ═══ Example 1: Detection MCQ — v1 MRI vs CT (2×2) ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_t1.png" alt="Example 1 grid">
+            <img src="assets/example_t1.png" alt="Example 1">
             <div class="qual-label">Example 1 · Detection MCQ</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Detection MCQ — "Which position contains the outlier? (A/B/C/D/E)"<br>
-              <strong>Ground truth:</strong> Position C (bottom-left) — MRI scan among CT scans.
+              <strong>Query:</strong> "You are reviewing a 2×2 grid of medical scans. One scan is the clinical outlier. Which position contains the outlier? (A–E)"<br>
+              <strong>Ground truth:</strong> C (bottom-left) — MRI scan among CT scans.
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
@@ -890,142 +890,229 @@
             <div class="pred-card wrong">
               <div class="pred-model">LLaVA-1.5-7B</div>
               <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Exhibits strong position bias — always defaults to top-left regardless of content.</p>
+              <p class="pred-note">Exhibits strong position bias — always defaults to A regardless of content.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Pixtral-12B</div>
               <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (bottom-right)</strong></div>
-              <p class="pred-note">Identifies the correct region but picks the wrong quadrant.</p>
+              <p class="pred-note">Picks the wrong quadrant despite the correct region.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 2: Detection Open — 3×3 dense grid -->
+        <!-- ═══ Example 2: Detection Open — v3 MRI among CT (3×3) ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_t3.png" alt="Example 2 grid">
+            <img src="assets/example_t3.png" alt="Example 2">
             <div class="qual-label">Example 2 · Detection Open</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Detection Open — "Identify the outlier position and explain why it differs."<br>
-              <strong>Ground truth:</strong> Position F (center-right) — MRI among 8 CT scans.
+              <strong>Query:</strong> "You are a medical imaging expert reviewing a 3×3 grid. Identify the outlier position and briefly explain why it differs."<br>
+              <strong>Ground truth:</strong> The MRI scan among 8 CT scans. Explain: different imaging modality.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (center-left)</strong></div>
-              <p class="pred-note">Identifies the correct row but picks the wrong column — overwhelmed by the dense 3×3 layout.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Points to incorrect position</div>
+              <p class="pred-note">The dense 3×3 layout overwhelms systematic comparison — picks wrong column.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Qwen3-VL-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Falls back to default position when uncertain about the dense grid.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Points to top-left</div>
+              <p class="pred-note">Falls back to default position under uncertainty in the dense grid.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Pixtral-12B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">3×3 grids universally expose shallow pattern matching across all model families.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Points to top-left</div>
+              <p class="pred-note">3×3 grids universally expose shallow pattern matching.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 3: Referring MCQ — Anatomy mismatch -->
+        <!-- ═══ Example 3: Referring MCQ — v4 Abdomen CT vs Chest X-ray ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_t4.png" alt="Example 3 grid">
+            <img src="assets/example_t4.png" alt="Example 3">
             <div class="qual-label">Example 3 · Referring MCQ</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Referring MCQ — "Is the described image at position X the outlier? (Yes/No)"<br>
-              <strong>Ground truth:</strong> Bottom-right is an abdomen CT scan among chest X-rays.
+              <strong>Query:</strong> "In this 2×2 grid, one scan contains a clinical anomaly (abdomen CT scan). Which position is it? (A–E)"<br>
+              <strong>Ground truth:</strong> D (bottom-right) — abdomen CT among chest X-rays.
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> <strong>Yes</strong> — correctly confirms the referred position</div>
-              <p class="pred-note">Cross-anatomy mismatches are well handled when the model is pointed to the right location.</p>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong></div>
+              <p class="pred-note">Referring MCQ gives a text hint about the anomaly type, making it easier to verify.</p>
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen3-VL-8B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> <strong>Yes</strong></div>
-              <p class="pred-note">Anatomy mismatches within the same modality are easier for most models.</p>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong></div>
+              <p class="pred-note">Cross-anatomy mismatches are easier when the anomaly type is described.</p>
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Pixtral-12B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> <strong>Yes</strong></div>
-              <p class="pred-note">Referring MCQ achieves higher accuracy because the model only needs to verify, not locate.</p>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong></div>
+              <p class="pred-note">Referring MCQ typically achieves higher accuracy than detection protocols.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 4: Referring Open — diversified modality -->
+        <!-- ═══ Example 4: Referring Open — v2 Ultrasound among MRI ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_t2.png" alt="Example 4 grid">
+            <img src="assets/qual_grid_v2_us.png" alt="Example 4">
             <div class="qual-label">Example 4 · Referring Open</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Referring Open — "The image at bottom-right: is it the outlier? Explain."<br>
-              <strong>Ground truth:</strong> Bottom-right is an MRI scan among CT scans.
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>B (top-right)</strong></div>
-              <p class="pred-note">Fails under open-ended generation despite succeeding on the MCQ variant of the same task.</p>
+              <strong>Query:</strong> "In this 2×2 grid, one image contains a clinical anomaly. State its position and describe the anomaly in one sentence."<br>
+              <strong>Ground truth:</strong> Top-left — ultrasound scan among MRI scans.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">InternVL2.5-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Open-ended protocols reveal weaker grounding than constrained MCQ options.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Incorrectly describes the anomaly</div>
+              <p class="pred-note">Open-ended generation reveals weaker grounding than constrained MCQ options.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">LLaVA-Med-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Medical fine-tuning does not help — pure position bias dominates.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Points to wrong position</div>
+              <p class="pred-note">Medical fine-tuning does not help — position bias dominates in open format.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4.1-nano</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Confuses modality labels</div>
+              <p class="pred-note">Smallest proprietary model struggles with open-ended clinical reasoning.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 5: Visual Referring — hardware detection -->
+        <!-- ═══ Example 5: Visual Referring (Positive) — v1 MRI vs CT ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_t5.png" alt="Example 5 grid">
-            <div class="qual-label">Example 5 · Visual Referring</div>
+            <img src="assets/qual_vis_pos_v1.png" alt="Example 5 — Visual Referring with red box">
+            <div class="qual-label">Example 5 · Visual Referring (Positive)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Visual Referring — the outlier is visually highlighted and the model must confirm or deny.<br>
-              <strong>Ground truth:</strong> Top-right contains surgical hardware/implants among clean chest X-rays.
+              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier — does it differ in modality, anatomy, or pathology from the others? Answer yes or no, then explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan is an MRI among CT scans.
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes, the highlighted scan is MRI."</div>
+              <p class="pred-note">When pointed directly at the outlier, the model can confirm differing modality.</p>
             </div>
             <div class="pred-card wrong">
-              <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>C (bottom-left)</strong></div>
-              <p class="pred-note">Fails to localize the metallic implant despite it being visually prominent.</p>
+              <div class="pred-model">LLaVA-1.5-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, all images appear consistent."</div>
+              <p class="pred-note">Fails to recognize the modality difference even when the outlier is highlighted.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Fleming-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
+              <p class="pred-note">Medical VLM incorrectly denies an obvious modality mismatch.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ Example 6: Visual Referring (Negative) — v1 box on non-outlier ═══ -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/qual_vis_neg_v1.png" alt="Example 6 — Visual Referring negative">
+            <div class="qual-label">Example 6 · Visual Referring (Negative)</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier — does it differ from the others? Answer yes or no, then explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — the highlighted scan is NOT the outlier. All highlighted images show MRI.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Qwen3-VL-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>C (bottom-left)</strong></div>
-              <p class="pred-note">Consistent failure on triage-level hardware detection across all model families.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes, it differs."</div>
+              <p class="pred-note">Hallucinates an anomaly in the highlighted panel despite it being consistent.</p>
             </div>
             <div class="pred-card wrong">
-              <div class="pred-model">Gemini-2.0-Flash</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (bottom-right)</strong></div>
-              <p class="pred-note">Even the best proprietary model cannot reliably detect surgical devices in X-rays.</p>
+              <div class="pred-model">Pixtral-12B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes"</div>
+              <p class="pred-note">"Always-find-something" bias is triggered by the red box visual cue.</p>
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">MedGemma1.5-4B-IT</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "No, the highlighted scan is consistent."</div>
+              <p class="pred-note">Best negative control accuracy among medical VLMs — capable of restraint.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 6: Detection MCQ — fracture detection -->
+        <!-- ═══ Example 7: Visual Referring (Positive) — v5 Hardware ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_t5_fx.png" alt="Example 6 grid">
-            <div class="qual-label">Example 6 · Detection MCQ</div>
+            <img src="assets/qual_vis_pos_v5.png" alt="Example 7 — Visual Referring T5 hardware">
+            <div class="qual-label">Example 7 · Visual Referring (Positive)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Detection MCQ — "Which position contains the outlier?"<br>
-              <strong>Ground truth:</strong> One scan contains a <strong>fracture</strong> among clean X-rays.
+              <strong>Query:</strong> "The red box highlights one scan. Is this the clinical outlier?"<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan contains surgical hardware/implants, others are clean CXRs.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
+              <p class="pred-note">Fails to identify surgical hardware even when the panel is directly highlighted.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Gemini-2.0-Flash</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, appears normal."</div>
+              <p class="pred-note">Even the best proprietary model cannot reliably detect surgical devices.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4o</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
+              <p class="pred-note">Triage-level hardware detection remains universally unsolved.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ Example 8: Visual Referring (Positive) — v3 3×3 with box ═══ -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/qual_vis_pos_v3.png" alt="Example 8 — Visual Referring 3×3">
+            <div class="qual-label">Example 8 · Visual Referring (3×3)</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Query:</strong> "The red box in this 3×3 grid highlights one scan. Is this highlighted scan the clinical outlier?"<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan is an MRI among CT scans.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">InternVL3-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, the highlighted image is consistent."</div>
+              <p class="pred-note">Dense 3×3 grids make it harder to compare even when the outlier is highlighted.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4.1-mini</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
+              <p class="pred-note">Smaller proprietary models struggle with visual referring on larger grids.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-5-nano</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, appears consistent."</div>
+              <p class="pred-note">Even the latest reasoning models fail on 3×3 visual referring tasks.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ Example 9: Detection MCQ — v5 fracture ═══ -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/qual_grid_v5_fx.png" alt="Example 9">
+            <div class="qual-label">Example 9 · Detection MCQ</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Query:</strong> "Which position contains the outlier? (A–E)"<br>
+              <strong>Ground truth:</strong> D (bottom-right) — contains a bone fracture among normal X-rays.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">GPT-4o</div>
@@ -1040,123 +1127,65 @@
             <div class="pred-card wrong">
               <div class="pred-model">Fleming-8B</div>
               <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Medical VLMs show no advantage on fracture triage over general-purpose models.</p>
+              <p class="pred-note">Medical VLMs show no advantage on fracture triage.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 7: Negative Control — no outlier -->
+        <!-- ═══ Example 10: Negative Control — v3 3×3 no outlier ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/example_neg.png" alt="Example 7 grid">
-            <div class="qual-label">Example 7 · Negative Control</div>
+            <img src="assets/qual_neg_v3.png" alt="Example 10">
+            <div class="qual-label">Example 10 · Negative Control (3×3)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Detection MCQ — with option E: "None — all images are the same."<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">E — No outlier exists.</span> All panels show the same modality.
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">Qwen3-VL-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> Predicted: <strong>C (bottom-left)</strong></div>
-              <p class="pred-note">Confidently hallucinates an outlier where none exists — a critical safety failure.</p>
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">Pixtral-12B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> Predicted: <strong>D (bottom-right)</strong></div>
-              <p class="pred-note">"Always-find-something" bias is catastrophic for pre-diagnostic gatekeeping.</p>
-            </div>
-            <div class="pred-card correct">
-              <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>E (None)</strong></div>
-              <p class="pred-note">One of few models that can suppress false alarms on clean grids.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example 8: 3×3 CT variant — Visual Referring -->
-        <div class="qual-row">
-          <div class="qual-image">
-            <img src="assets/example_t3_ct.png" alt="Example 8 grid">
-            <div class="qual-label">Example 8 · Visual Referring</div>
-          </div>
-          <div class="qual-preds">
-            <div class="qual-meta">
-              <strong>Protocol:</strong> Visual Referring — "The highlighted image: is it the clinical outlier?"<br>
-              <strong>Ground truth:</strong> One CT scan differs from the remaining 8 scans in modality.
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">InternVL3-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>E (center)</strong></div>
-              <p class="pred-note">Center bias emerges in 3×3 grids — models fixate on the middle panel by default.</p>
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">GPT-4.1-mini</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Smaller proprietary models revert to position bias on dense visual inputs.</p>
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">GPT-5-nano</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>G (bottom-left)</strong></div>
-              <p class="pred-note">Even the latest reasoning models struggle with exhaustive 3×3 comparison.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example 9: Referring Open — negative control 3×3 -->
-        <div class="qual-row">
-          <div class="qual-image">
-            <img src="assets/negative_control.png" alt="Example 9 grid">
-            <div class="qual-label">Example 9 · Referring Open (Negative)</div>
-          </div>
-          <div class="qual-preds">
-            <div class="qual-meta">
-              <strong>Protocol:</strong> Referring Open — "Is the image at the referred position an outlier? Explain."<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No outlier.</span> All images are consistent — model should say "No."
+              <strong>Query:</strong> "If one scan is the outlier, identify it. If all scans appear consistent, select 'None'. (A–J)"<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">J (None)</span> — all images show MRI scans. No outlier exists.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Gemini-2.0-Flash</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes, the referred image shows a <strong>different orientation</strong>."</div>
-              <p class="pred-note">Fabricates a visual difference that does not exist — most dangerous hallucination mode.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> Picks a panel as outlier</div>
+              <p class="pred-note">Fabricates a difference in a perfectly consistent 3×3 grid.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">GPT-4o</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes, it appears to be a <strong>different scan type</strong>."</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> Picks a panel as outlier</div>
               <p class="pred-note">Generates plausible-sounding but entirely fabricated clinical reasoning.</p>
             </div>
             <div class="pred-card correct">
-              <div class="pred-model">MedGemma1.5-4B-IT</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "No, all images appear consistent."</div>
-              <p class="pred-note">Best negative control accuracy among medical VLMs (64.1%) — capable of restraint.</p>
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>J (None)</strong></div>
+              <p class="pred-note">One of few models capable of correctly suppressing false alarms on 3×3 grids.</p>
             </div>
           </div>
         </div>
 
-        <!-- Example 10: Detection MCQ — cross-modality 2×2 -->
+        <!-- ═══ Example 11: Visual Referring (Positive) — v4 anatomy ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/tier1.png" alt="Example 10 grid">
-            <div class="qual-label">Example 10 · Detection MCQ</div>
+            <img src="assets/qual_vis_pos_v4.png" alt="Example 11 — Visual Referring anatomy">
+            <div class="qual-label">Example 11 · Visual Referring (Positive)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Protocol:</strong> Detection MCQ — "Which position contains the outlier? (A/B/C/D/E)"<br>
-              <strong>Ground truth:</strong> One panel differs in imaging modality from the other three.
+              <strong>Query:</strong> "The red box highlights one scan. Is this the clinical outlier?"<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan is an abdomen CT among chest X-rays (anatomy mismatch).
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Gemini-2.5-Flash</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Accurately locates the modality outlier</div>
-              <p class="pred-note">Proprietary models lead on simple 2×2 modality detection (67.2% on Task-A).</p>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes, this is an abdominal scan."</div>
+              <p class="pred-note">Proprietary models perform best on visual referring with clear anatomy differences.</p>
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes"</div>
+              <p class="pred-note">Cross-anatomy mismatches are well handled when the panel is directly highlighted.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">LLaVA-Med-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Medical fine-tuning on LLaVA produces the worst overall accuracy (28.0%) in the benchmark.</p>
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">GPT-4.1-nano</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>B (top-right)</strong></div>
-              <p class="pred-note">Smallest proprietary model (28.3% avg) performs comparably to worst medical VLM.</p>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
+              <p class="pred-note">Medical fine-tuning on LLaVA produces the worst accuracy (28.0%) across all protocols.</p>
             </div>
           </div>
         </div>
