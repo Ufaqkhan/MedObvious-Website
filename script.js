@@ -57,4 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
     showSlide(currentSlide);
     setInterval(nextSlide, slideDuration);
   }
+
+  // Results table tab switcher
+  const tabContainer = document.getElementById('resultTabs');
+  if (tabContainer) {
+    tabContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('.table-tab');
+      if (!btn) return;
+      const tabId = btn.dataset.tab;
+
+      // Toggle active tab button
+      tabContainer.querySelectorAll('.table-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Toggle active panel
+      document.querySelectorAll('.table-panel').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById('panel-' + tabId);
+      if (target) target.classList.add('active');
+    });
+  }
 });

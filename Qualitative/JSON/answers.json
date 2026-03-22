@@ -1,0 +1,58 @@
+{
+    "Image_1": {
+        "Qwen3-VL": {
+            "id": "v3_ct_scan_2_vis_neg",
+            "image_path": "/share_2/users/umair_nawaz/MedObvious/data/benchmark_refined/v3/images/v3_ct_scan_2_vis_neg.png",
+            "task_type": "visual_referring",
+            "question": "The red box in this 3\u00d73 medical image grid highlights one scan. Is this highlighted scan the clinical outlier \u2014 does it differ from the others? Answer yes or no, then briefly explain.",
+            "answer": "no",
+            "answer_keywords": [
+                "no",
+                "all",
+                "same",
+                "ct_scan"
+            ],
+            "is_negative": true,
+            "explanation": "All images show ct scan. No outlier is present.",
+            "model_prediction_raw": "yes",
+            "model_prediction": "yes",
+            "is_correct": false
+        },
+        "Pixtral-12B": {
+            "id": "v3_ct_scan_2_vis_neg",
+            "image_path": "/share_2/users/umair_nawaz/MedObvious/data/benchmark_refined/v3/images/v3_ct_scan_2_vis_neg.png",
+            "task_type": "visual_referring",
+            "question": "The red box in this 3\u00d73 medical image grid highlights one scan. Is this highlighted scan the clinical outlier \u2014 does it differ from the others? Answer yes or no, then briefly explain.",
+            "answer": "no",
+            "answer_keywords": [
+                "no",
+                "all",
+                "same",
+                "ct_scan"
+            ],
+            "is_negative": true,
+            "explanation": "All images show ct scan. No outlier is present.",
+            "model_prediction_raw": "Yes. \n\nThe highlighted scan in the red box is an outlier as it shows a chest X-ray with a visible abnormality indicated by a red",
+            "model_prediction": "yes",
+            "is_correct": false
+        },
+        "LlaVA-1.5-7B": {
+            "id": "v3_ct_scan_2_vis_neg",
+            "image_path": "/share_2/users/umair_nawaz/MedObvious/data/benchmark_refined/v3/images/v3_ct_scan_2_vis_neg.png",
+            "task_type": "visual_referring",
+            "question": "The red box in this 3\u00d73 medical image grid highlights one scan. Is this highlighted scan the clinical outlier \u2014 does it differ from the others? Answer yes or no, then briefly explain.",
+            "answer": "no",
+            "answer_keywords": [
+                "no",
+                "all",
+                "same",
+                "ct_scan"
+            ],
+            "is_negative": true,
+            "explanation": "All images show ct scan. No outlier is present.",
+            "model_prediction_raw": "Yes",
+            "model_prediction": "yes",
+            "is_correct": false
+        }
+    }
+}

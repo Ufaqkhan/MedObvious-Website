@@ -16,6 +16,8 @@
 </head>
 
 <body>
+
+  <!-- ────────────────────── HEADER ────────────────────── -->
   <header class="site-header" id="top">
     <nav class="nav">
       <a class="brand" href="#top"><span>Med</span>Obvious</a>
@@ -25,57 +27,66 @@
       <div class="nav-links">
         <a href="#overview">Overview</a>
         <a href="#benchmark">Benchmark</a>
+        <a href="#tiers">Tiers</a>
         <a href="#results">Results</a>
         <a href="#qualitative">Examples</a>
         <a href="#downloads">Downloads</a>
       </div>
     </nav>
 
+    <!-- Hero -->
     <section class="hero">
       <div class="hero-copy reveal">
-        <p class="eyebrow">Pre-diagnostic visual sanity checking for medical vision-language models</p>
-        <h1>MedObvious</h1>
+        <p class="eyebrow">Pre-diagnostic visual sanity checking</p>
+        <h1>Med<span style="color:var(--primary)">Obvious</span></h1>
         <p class="hero-subtitle">Exposing the Medical Moravec's Paradox in VLMs via clinical triage.</p>
         <p class="hero-text">
-          MedObvious asks a question that comes before diagnosis: <strong>is the input coherent and safe to
-            interpret?</strong>
-          The benchmark isolates input validation as a set-level consistency problem over small multi-panel image sets,
-          with progressive tiers, multiple interfaces, and explicit negative controls.
+          MedObvious asks the question that comes <em>before</em> diagnosis:
+          <strong>is the input coherent and safe to interpret?</strong>
+          The benchmark isolates input validation as a set-level consistency problem
+          over small multi-panel image grids, with progressive tiers, multiple evaluation
+          protocols, and explicit negative controls.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">Read
+          <a class="btn btn-primary" href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">📄 Read
             arXiv</a>
-          <a class="btn btn-secondary" href="#teaser">Watch teaser</a>
+          <a class="btn btn-secondary" href="#teaser">▶ Watch teaser</a>
         </div>
         <ul class="hero-stats" aria-label="Benchmark summary">
           <li><strong>1,880</strong><span>tasks</span></li>
-          <li><strong>5</strong><span>tiers</span></li>
-          <li><strong>5</strong><span>protocols</span></li>
+          <li><strong>5</strong><span>progressive tiers</span></li>
+          <li><strong>5</strong><span>eval protocols</span></li>
           <li><strong>705</strong><span>negative controls</span></li>
           <li><strong>17</strong><span>VLMs evaluated</span></li>
-          <li><strong>88.4</strong><span>human avg</span></li>
+          <li><strong>88.4%</strong><span>human accuracy</span></li>
         </ul>
       </div>
+
+      <!-- Hero right: big question + sample grid -->
       <div class="hero-media reveal" style="display:flex; flex-direction:column; justify-content:center;">
         <div class="media-card"
-          style="background: linear-gradient(135deg, var(--surface-2), var(--surface)); padding: 3.5rem 2.5rem; text-align: center; width:100%; border: 1px solid var(--line); border-bottom: 4px solid var(--primary); box-shadow: var(--shadow-md); border-radius: 16px;">
+          style="background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 2.5rem 2rem; text-align: center; border: 1px solid var(--line); border-bottom: 4px solid var(--primary); box-shadow: var(--shadow-lg); border-radius: var(--radius);">
           <h2
-            style="font-size: 2.5rem; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 2rem; font-family: Outfit, Inter, sans-serif;">
-            "Which image does not belong among the multiple candidate images?"
+            style="font-size: clamp(1.6rem, 2.5vw, 2.4rem); font-weight: 800; color: var(--text); line-height: 1.3; margin-bottom: 1.8rem; font-family: Outfit, Inter, sans-serif;">
+            "Which image does <em>not</em> belong<br>among the candidates?"
           </h2>
           <div
-            style="background: white; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-sm); display:inline-block; border: 1px solid rgba(0,0,0,0.05);">
-            <img src="assets/samples/tier3.png" style="width: 100%; max-width:320px; display: block;"
-              alt="Odd-One-Out Template">
+            style="background: white; border-radius: 12px; padding: 1rem; box-shadow: var(--shadow-sm); display:inline-block; border: 1px solid rgba(0,0,0,0.06);">
+            <img src="assets/example_t1.png" style="width: 100%; max-width:280px; display: block; border-radius: 8px;"
+              alt="Tier 1 example: MRI vs CT 2×2 grid">
           </div>
-          <p style="margin-top: 1.5rem; color: var(--muted); font-size: 1.15rem; font-weight: 600;">The ultimate visual
-            outlier detection challenge.</p>
+          <p style="margin-top: 1.2rem; color: var(--muted); font-size: 1rem; font-weight: 600;">
+            <span style="color:var(--emerald);">✓</span> Answer: <strong>bottom-left</strong> — an MRI scan among CT
+            scans.
+          </p>
         </div>
       </div>
     </section>
   </header>
 
   <main>
+
+    <!-- ────────────────────── OVERVIEW ────────────────────── -->
     <section class="section section-alt" id="overview">
       <div class="container grid-two">
         <div class="reveal">
@@ -83,243 +94,192 @@
           <h2>Before a model diagnoses, it should know what it is looking at.</h2>
           <p>
             In clinical practice, interpretation begins with input verification: modality, anatomy,
-            viewpoint/orientation,
-            and basic image integrity must be correct before reasoning about pathology. MedObvious measures this
-            <strong>pre-diagnostic gatekeeping</strong> ability directly.
+            viewpoint, and basic image integrity must be correct before reasoning about pathology.
+            MedObvious measures this <strong>pre-diagnostic gatekeeping</strong> ability directly.
           </p>
           <p>
-            This is especially important for <strong>multi-image and agentic workflows</strong>, where models may
-            operate over
-            multi-view ultrasound, CT/MRI series, or viewer layouts such as 3D Slicer and ITK-SNAP. A single
-            inconsistent
-            panel or slice can invalidate downstream reasoning.
+            This is especially important for <strong>multi-image and agentic workflows</strong>,
+            where models operate over multi-view ultrasound, CT/MRI series, or viewer layouts.
+            A single inconsistent panel can invalidate downstream reasoning.
           </p>
         </div>
         <div class="stack reveal">
           <article class="info-card accent-blue">
-            <h3>Clinical safety</h3>
-            <p>Wrong body part, flipped images, anatomy/viewpoint mismatches, gross pathology, and device-related cues
-              that should be caught before diagnosis.</p>
+            <h3>🏥 Clinical safety</h3>
+            <p>Wrong body part, flipped images, anatomy/viewpoint mismatches, and device-related cues that should be
+              caught before any diagnosis.</p>
           </article>
           <article class="info-card accent-green">
-            <h3>Visual grounding</h3>
+            <h3>🔬 Visual grounding</h3>
             <p>Synthetic inconsistencies test whether decisions are anchored in visual evidence rather than language
               priors or report-style completion.</p>
           </article>
           <article class="info-card accent-rose">
-            <h3>Negative controls</h3>
-            <p>705 tasks contain no outlier, directly measuring false alarms when all panels are internally consistent.
-            </p>
+            <h3>⚠️ Negative controls</h3>
+            <p>705 tasks contain no outlier, directly measuring false alarm rates when all panels are internally
+              consistent.</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- ────────────────────── TEASER ────────────────────── -->
     <section class="section" id="teaser">
       <div class="container reveal">
         <div class="section-heading center">
-          <p class="section-label">Teaser</p>
-          <h2>A compact view of the benchmark and its motivation</h2>
+          <p class="section-label">Interactive Teaser</p>
+          <h2>A guided walkthrough of MedObvious</h2>
         </div>
-        <div class="teaser-presentation shadow-xl">
+
+        <div class="teaser-presentation">
           <!-- Slide 1: Motivation -->
-          <div class="slide slide-1 active">
+          <div class="slide active">
             <div class="slide-content">
-              <span class="bad-badge">Motivation</span>
-              <h2 style="font-size:2.6rem; margin-bottom:1.2rem; color:#0f172a;">Are Medical VLMs Truly Reasoning?</h2>
-              <p style="font-size:1.15rem; color:#475569; max-width:650px; margin:0 auto;">Current Vision-Language
-                Models (VLMs) boast impressive medical QA scores. However, they are largely memorizing textbook patterns
-                rather than performing genuine diagnostic deduction.</p>
-              <div style="font-size: 3.5rem; margin-top: 1.5rem;">🤔 🏥 🤖</div>
+              <span class="badge badge-red">Motivation</span>
+              <h2 class="slide-title">Are Medical VLMs Truly Reasoning?</h2>
+              <p class="slide-text">Current Vision-Language Models boast impressive medical QA scores. However, they may
+                be memorizing textbook patterns rather than performing genuine diagnostic deduction.</p>
+              <div style="font-size: 3rem; margin-top: 1.5rem; opacity: 0.8;">🤔 🏥 🤖</div>
             </div>
           </div>
 
-          <!-- Slide 2: The Flaw -->
-          <div class="slide slide-2">
-            <div class="slide-content" style="width:100%;">
-              <span class="bad-badge">The Core Problem</span>
-              <h2 style="font-size:2.6rem; margin-bottom:1.2rem;">Standard Benchmarks Are Flawed.</h2>
-              <p style="font-size:1.15rem; color:#475569; max-width:700px; margin:0 auto 2rem;">Traditional datasets
-                test basic factual retrieval. They fail to test active comparative triage or strictly penalize severe
-                model hallucinations.</p>
-
-              <div style="display:flex; justify-content:center; gap:2rem; width:100%;">
-                <!-- Flaw 1 -->
-                <div
-                  style="flex:1; max-width:320px; background:#fef2f2; border:1px solid #fca5a5; border-radius:12px; padding:1.25rem; text-align:left; box-shadow:var(--shadow-sm);">
-                  <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
-                    <div
-                      style="background:#ef4444; color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 0.9rem;">
-                      1</div>
-                    <h4 style="color:#b91c1c; margin:0; font-size:1.05rem;">Vulnerable to Text Bias</h4>
+          <!-- Slide 2: The Problem -->
+          <div class="slide">
+            <div class="slide-content" style="width: 100%;">
+              <span class="badge badge-red">The Core Problem</span>
+              <h2 class="slide-title">Standard Benchmarks Fail to Test Visual Triage</h2>
+              <p class="slide-text" style="margin-bottom: 2rem;">Existing benchmarks test factual retrieval but do not
+                test active comparative reasoning or penalize severe hallucinations on clean inputs.</p>
+              <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap;">
+                <div class="flaw-card">
+                  <div class="flaw-header">
+                    <div class="flaw-num">1</div>
+                    <h4>Text Bias</h4>
                   </div>
-                  <div
-                    style="background:white; border-radius:8px; padding:0.75rem; border:1px solid #e2e8f0; font-size:0.9rem; margin-bottom:0.75rem; display:flex; gap:0.5rem; align-items:center;">
-                    <span style="font-size:1.5rem;">🖼️</span>
-                    <div><strong style="color:#0f172a">Image:</strong> MRI Brain<br><strong
-                        style="color:#0f172a">Text:</strong> <span style="background:yellow;">"CT Scan"</span></div>
-                  </div>
-                  <div
-                    style="background:#f8fafc; border-radius:8px; padding:0.75rem; border:1px solid #e2e8f0; font-size:0.9rem;">
-                    <strong style="color:#0f172a">Model:</strong> "It's a CT Scan." ❌<br>
-                    <em style="color:#64748b; font-size:0.8rem;">(Reads the text overlay instead of analyzing
-                      pixels)</em>
-                  </div>
+                  <p>Models read text overlays instead of analyzing the actual visual content of the scan.</p>
                 </div>
-
-                <!-- Flaw 2 -->
-                <div
-                  style="flex:1; max-width:320px; background:#fef2f2; border:1px solid #fca5a5; border-radius:12px; padding:1.25rem; text-align:left; box-shadow:var(--shadow-sm);">
-                  <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
-                    <div
-                      style="background:#ef4444; color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 0.9rem;">
-                      2</div>
-                    <h4 style="color:#b91c1c; margin:0; font-size:1.05rem;">Rote Memorization</h4>
+                <div class="flaw-card">
+                  <div class="flaw-header">
+                    <div class="flaw-num">2</div>
+                    <h4>Rote Memorization</h4>
                   </div>
-                  <div
-                    style="background:white; border-radius:8px; padding:0.75rem; border:1px solid #e2e8f0; font-size:0.9rem; margin-bottom:0.75rem; display:flex; gap:0.5rem; align-items:center;">
-                    <span style="font-size:1.5rem;">🩻</span>
-                    <div><strong style="color:#0f172a">Prompt:</strong> Is this scan normal?</div>
-                  </div>
-                  <div
-                    style="background:#f8fafc; border-radius:8px; padding:0.75rem; border:1px solid #e2e8f0; font-size:0.9rem;">
-                    <strong style="color:#0f172a">Model:</strong> "Yes, normal." ❌<br>
-                    <em style="color:#64748b; font-size:0.8rem;">(Guesses blindly based on statistical probability)</em>
-                  </div>
+                  <p>Models guess based on statistical probability rather than examining the image systematically.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Slide 3: The Solution -->
-          <div class="slide slide-3">
+          <!-- Slide 3: Solution -->
+          <div class="slide">
             <div class="slide-content"
-              style="display:flex; align-items:center; text-align:left; gap:3rem; max-width:850px; margin:0 auto; width:100%;">
+              style="display:flex; align-items:center; text-align:left; gap:2.5rem; max-width:850px; margin:0 auto; width:100%;">
               <div style="flex:1;">
-                <span class="good-badge" style="margin-bottom:1rem;">Our Solution</span>
-                <h2 style="font-size:3rem; color:#2563eb; margin-bottom:0.5rem;">MedObvious</h2>
-                <h3 style="font-size:1.4rem; font-weight:500; color:#0f172a; margin-bottom:1.5rem;">The Clinical
+                <span class="badge badge-green">Our Solution</span>
+                <h2 style="font-size:clamp(2rem,3vw,3rem); color:var(--primary); margin:0.5rem 0;">MedObvious</h2>
+                <h3 style="font-size:1.2rem; font-weight:500; color:var(--text); margin-bottom:1.2rem;">The Clinical
                   Odd-One-Out Test</h3>
-                <p style="font-size:1.15rem; color:#475569;">We strictly force Vision-Language Models to systematically
-                  analyze dense matrices of clinical scans, actively testing their ability to pinpoint the absolute
-                  anomalous outlier.</p>
+                <p style="color:var(--muted); line-height:1.6;">We force VLMs to systematically analyze dense grids of
+                  clinical scans and identify the single anomalous outlier — testing pre-diagnostic visual sanity.</p>
               </div>
               <div style="flex:1.2;">
-                <img src="assets/main_figure.png" class="shadow-xl"
-                  style="width:100%; border-radius:12px; object-fit:cover; border:1px solid rgba(0,0,0,0.05);">
+                <img src="assets/main_figure.png"
+                  style="width:100%; border-radius:12px; box-shadow:var(--shadow-md); border:1px solid rgba(0,0,0,0.06);"
+                  alt="MedObvious overview">
               </div>
             </div>
           </div>
 
-          <!-- Slide 4: Methodology -->
-          <div class="slide slide-4">
-            <div class="slide-content">
-              <span class="neutral-badge">Methodology</span>
-              <h2 style="font-size:2.5rem; margin-bottom:1.5rem;">How we build the benchmark</h2>
-              <div style="display:flex; justify-content:center; gap:1.5rem; margin-top:1.5rem; align-items:flex-start;">
-                <div style="width:160px;">
-                  <div
-                    style="background:#eff6ff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:bold; color:#1d4ed8; margin:0 auto 1rem;">
-                    1</div>
-                  <h4 style="font-size:1.1rem;">N Clean Scans</h4>
-                  <p style="font-size:0.85rem; color:#64748b; margin-top:0.5rem;">Sample highly identical, normalized
-                    baseline clinical scans.</p>
-                </div>
-                <div style="font-size:2rem; margin-top:10px; color:#cbd5e1;">+</div>
-                <div style="width:160px;">
-                  <div
-                    style="background:#eff6ff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:bold; color:#1d4ed8; margin:0 auto 1rem;">
-                    2</div>
-                  <h4 style="font-size:1.1rem;">1 Target Anomaly</h4>
-                  <p style="font-size:0.85rem; color:#64748b; margin-top:0.5rem;">Inject an outlier with a different
-                    modality, anatomy, or pathology.</p>
-                </div>
-                <div style="font-size:2rem; margin-top:10px; color:#cbd5e1;">=</div>
-                <div style="width:160px;">
-                  <div
-                    style="background:#eff6ff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:bold; color:#1d4ed8; margin:0 auto 1rem;">
-                    3</div>
-                  <h4 style="font-size:1.1rem;">Strict Triage Task</h4>
-                  <p style="font-size:0.85rem; color:#64748b; margin-top:0.5rem;">The VLM must spatially locate and
-                    justify the correct outlier.</p>
-                </div>
+          <!-- Slide 4: Real T1 example -->
+          <div class="slide">
+            <div class="slide-content"
+              style="display:flex; align-items:center; gap:2.5rem; max-width:850px; margin:0 auto; width:100%;">
+              <div style="flex:1; text-align:center;">
+                <img src="assets/example_t1.png"
+                  style="max-width:260px; width:100%; border-radius:10px; box-shadow:var(--shadow-md);"
+                  alt="Tier 1 example grid">
+              </div>
+              <div style="flex:1.2; text-align:left;">
+                <span class="badge badge-blue">Tier 1 — Foundation</span>
+                <h2 style="font-size:1.8rem; margin:0.5rem 0 0.8rem;">Modality Mismatch (2×2)</h2>
+                <p style="color:var(--muted); margin-bottom:1rem;">The grid contains 3 CT scans and 1 MRI scan at
+                  <strong>bottom-left</strong>.</p>
+                <div class="pred-row"><span class="pred-label correct">Qwen2.5-VL ✓</span><span class="pred-answer">"C
+                    (bottom-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">LLaVA-1.5 ✗</span><span class="pred-answer">"A
+                    (top-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">Pixtral-12B ✗</span><span class="pred-answer">"D
+                    (bottom-right)"</span></div>
               </div>
             </div>
           </div>
 
-          <!-- Slide 5: Comprehensive Scope -->
-          <div class="slide slide-5">
-            <div class="slide-content">
-              <span class="neutral-badge">Project Scope</span>
-              <h2 style="font-size:2.5rem; margin-bottom:1.5rem;">Comprehensive Clinical Scale</h2>
-              <div class="modality-pills" style="margin-top:1rem; gap:1.5rem;">
-                <div style="text-align:center;"><img src="assets/samples/tier1.png"
-                    style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:3px solid #e2e8f0; box-shadow:var(--shadow-md);">
-                  <h4 style="margin-top:0.5rem; font-size:1rem;">MRI/CT</h4>
-                </div>
-                <div style="text-align:center;"><img src="assets/samples/tier3.png"
-                    style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:3px solid #e2e8f0; box-shadow:var(--shadow-md);">
-                  <h4 style="margin-top:0.5rem; font-size:1rem;">US/CXR</h4>
-                </div>
-                <div style="text-align:center;"><img src="assets/samples/tier5.png"
-                    style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:3px solid #e2e8f0; box-shadow:var(--shadow-md);">
-                  <h4 style="margin-top:0.5rem; font-size:1rem;">Ortho</h4>
-                </div>
-                <div style="text-align:center;">
-                  <div
-                    style="width:85px; height:85px; background:#f1f5f9; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; border:3px solid #e2e8f0; margin:0 auto; box-shadow:var(--shadow-md);">
-                    🔬</div>
-                  <h4 style="margin-top:0.5rem; font-size:1rem;">Path</h4>
-                </div>
+          <!-- Slide 5: Real T3 example -->
+          <div class="slide">
+            <div class="slide-content"
+              style="display:flex; align-items:center; gap:2.5rem; max-width:850px; margin:0 auto; width:100%;">
+              <div style="flex:1; text-align:center;">
+                <img src="assets/example_t3.png"
+                  style="max-width:300px; width:100%; border-radius:10px; box-shadow:var(--shadow-md);"
+                  alt="Tier 3 example grid">
               </div>
-              <p style="font-size:1rem; font-weight:600; color:#2563eb; margin-top:1.5rem; letter-spacing:0.05em;">1,784
-                EXPERT-VALIDATED EVALUATION TASKS</p>
+              <div style="flex:1.2; text-align:left;">
+                <span class="badge badge-blue">Tier 3 — Scaling</span>
+                <h2 style="font-size:1.8rem; margin:0.5rem 0 0.8rem;">Dense 3×3 Grid</h2>
+                <p style="color:var(--muted); margin-bottom:1rem;">8 CT scans + 1 MRI at position <strong>F
+                    (center-right)</strong>. The scaling overwhelms most models.</p>
+                <div class="pred-row"><span class="pred-label wrong">Qwen2.5-VL ✗</span><span class="pred-answer">"D
+                    (center-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">Qwen3-VL ✗</span><span class="pred-answer">"A
+                    (top-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">Pixtral-12B ✗</span><span class="pred-answer">"A
+                    (top-left)"</span></div>
+              </div>
             </div>
           </div>
 
-          <!-- Slide 6: Progressive Tiers -->
-          <div class="slide slide-6">
+          <!-- Slide 6: Real T5 example -->
+          <div class="slide">
+            <div class="slide-content"
+              style="display:flex; align-items:center; gap:2.5rem; max-width:850px; margin:0 auto; width:100%;">
+              <div style="flex:1; text-align:center;">
+                <img src="assets/example_t5.png"
+                  style="max-width:260px; width:100%; border-radius:10px; box-shadow:var(--shadow-md);"
+                  alt="Tier 5 example grid">
+              </div>
+              <div style="flex:1.2; text-align:left;">
+                <span class="badge badge-blue">Tier 5 — Triage</span>
+                <h2 style="font-size:1.8rem; margin:0.5rem 0 0.8rem;">Hardware / Device Detection</h2>
+                <p style="color:var(--muted); margin-bottom:1rem;">One scan contains <strong>surgical hardware</strong>
+                  at <strong>top-right</strong>. The others are clean chest X-rays.</p>
+                <div class="pred-row"><span class="pred-label wrong">Qwen2.5-VL ✗</span><span
+                    class="pred-answer">"C (bottom-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">Qwen3-VL ✗</span><span
+                    class="pred-answer">"C (bottom-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">LLaVA-1.5 ✗</span><span class="pred-answer">"A
+                    (top-left)"</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 7: Key finding -->
+          <div class="slide">
             <div class="slide-content">
-              <span class="neutral-badge">Architecture</span>
-              <h2 style="font-size:2.5rem; margin-bottom:1rem;">5 Progressively Harder Tiers</h2>
+              <span class="badge badge-red">Key Finding</span>
+              <h2 class="slide-title">Severe Hallucinations on Negative Controls</h2>
+              <p class="slide-text" style="margin-bottom:1.5rem;">When given a grid with <strong>no outlier
+                  present</strong>, most VLMs confidently hallucinate one. Human experts score <strong>95.7%</strong>.
+              </p>
               <div
-                style="display:flex; flex-direction:column; gap:0.75rem; align-items:center; margin-top:1.5rem; width:100%;">
+                style="background:#fee2e2; border:2px solid #fca5a5; padding:1.5rem 2.5rem; border-radius:14px; display:inline-block;">
                 <div
-                  style="width:85%; background:#f8fafc; border-left:4px solid #3b82f6; padding:0.8rem 1.2rem; text-align:left; border-radius:0 8px 8px 0; font-weight:600; font-size:1.05rem;">
-                  Tier 1/2: Modality & Semantic Variable Triage</div>
-                <div
-                  style="width:85%; background:#f8fafc; border-left:4px solid #8b5cf6; padding:0.8rem 1.2rem; text-align:left; border-radius:0 8px 8px 0; font-weight:600; font-size:1.05rem;">
-                  Tier 3: Complex 3x3 Visual Matrices</div>
-                <div
-                  style="width:85%; background:#f8fafc; border-left:4px solid #f59e0b; padding:0.8rem 1.2rem; text-align:left; border-radius:0 8px 8px 0; font-weight:600; font-size:1.05rem;">
-                  Tier 4: Subtle Anatomy Mismatches</div>
-                <div
-                  style="width:85%; background:#f8fafc; border-left:4px solid #ef4444; padding:0.8rem 1.2rem; text-align:left; border-radius:0 8px 8px 0; font-weight:600; font-size:1.05rem;">
-                  Tier 5: Deep Clinical Pathology & Hardware Saliency</div>
+                  style="font-size:0.85rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:#b91c1c; margin-bottom:0.3rem;">
+                  Best VLM on negatives</div>
+                <div style="font-size:3.5rem; font-weight:800; color:#dc2626; line-height:1;">70.7%</div>
+                <div style="font-size:0.9rem; color:#b91c1c; margin-top:0.3rem;">Qwen2.5-VL-7B</div>
               </div>
             </div>
           </div>
 
-          <!-- Slide 7: The Revelation -->
-          <div class="slide slide-7">
-            <div class="slide-content">
-              <span class="bad-badge">Scientific Findings</span>
-              <h2 style="font-size:2.6rem; margin-bottom:1.2rem;">Severe Hallucinations Exposed</h2>
-              <p style="font-size:1.1rem; color:#475569; max-width:650px; margin:0 auto 1.5rem;">When we test models on
-                "Negative Controls" (an identical grid with <strong>no outlier present</strong>), all state-of-the-art
-                models confidently hallucinate a clinical outcome.</p>
-
-              <div
-                style="background:#fee2e2; border:1px solid #fca5a5; padding:1.25rem 2rem; border-radius:12px; display:inline-block; margin-top:0.5rem; text-align:center;">
-                <h3 style="color:#b91c1c; margin:0; font-size:1.1rem; text-transform:uppercase; letter-spacing:0.05em;">
-                  VLM Accuracy on Negative Controls</h3>
-                <div style="font-size:3.5rem; font-weight:800; color:#dc2626; line-height:1; margin-top:0.5rem;">Below
-                  25%</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Progress Line -->
           <div class="slide-progress">
             <div class="progress-bar"></div>
           </div>
@@ -327,289 +287,911 @@
       </div>
     </section>
 
+    <!-- ────────────────────── BENCHMARK DESIGN ────────────────────── -->
     <section class="section section-alt" id="benchmark">
       <div class="container reveal">
         <div class="section-heading center">
-          <p class="section-label">Benchmark design</p>
+          <p class="section-label">Benchmark Design</p>
           <h2>Set-level consistency as a controlled testbed</h2>
-          <p>
-            MedObvious abstracts multi-view clinical workflows into small grids where the model must identify an outlier
-            or correctly answer that none exists.
-          </p>
+          <p>MedObvious abstracts multi-view clinical workflows into small grids where the model must identify an
+            outlier — or correctly state that none exists.</p>
         </div>
         <figure class="figure-card">
-          <img src="assets/overview.png" alt="MedObvious benchmark overview figure">
+          <img src="assets/overview.png" alt="MedObvious benchmark overview" style="border-radius:12px;">
         </figure>
         <div class="feature-grid">
           <article class="feature-card">
             <span class="feature-index">01</span>
             <h3>Five progressive tiers</h3>
-            <p>From basic modality/orientation mismatches to anatomy/viewpoint verification and triage-style failures.
-            </p>
+            <p>From basic modality mismatches (T1) to subtle clinical pathology and hardware detection (T5).</p>
           </article>
           <article class="feature-card">
             <span class="feature-index">02</span>
             <h3>Five evaluation protocols</h3>
-            <p>Detection MCQ/Open, Referring MCQ/Open, and Visual Referring expose localization, description, and binary
-              verification behavior.</p>
+            <p>Detection MCQ/Open, Referring MCQ/Open, and Visual Referring test localization, description, and
+              verification.</p>
           </article>
           <article class="feature-card">
             <span class="feature-index">03</span>
-            <h3>Set-based motivation</h3>
-            <p>Designed to reflect multi-view ultrasound, CT/MRI series, and multi-panel viewer interactions where
-              consistency must hold across images.</p>
+            <h3>Explicit negative controls</h3>
+            <p>705 tasks contain no outlier, directly measuring false alarm rates that are critical for safe deployment.
+            </p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- ────────────────────── TIERS ────────────────────── -->
     <section class="section" id="tiers">
       <div class="container reveal">
         <div class="section-heading center">
-          <p class="section-label">Five tiers</p>
+          <p class="section-label">Five Tiers</p>
           <h2>Progressively harder sanity-checking tasks</h2>
+          <p>Each tier introduces new complexity. Real examples from the benchmark are shown alongside each tier
+            description.</p>
         </div>
-        <div class="vertical-tiers"
-          style="display:flex; flex-direction:column; gap:1.5rem; max-width:850px; margin:0 auto;">
-          <!-- T5 -->
-          <article class="tier-card-v"
-            style="background:#fce7e7; display:flex; align-items:center; padding:1.5rem 2rem; border-radius:16px;">
-            <div style="flex:1;">
-              <h3 style="font-size:1.8rem; margin:0; display:flex; align-items:center; gap:1rem;"><span
-                  style="background:#9ca3af; color:white; width:36px; height:36px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:1.2rem;">A</span>
-                T5: Triage</h3>
-              <p style="margin-top:0.5rem; color:#475569;">High-saliency failures such as devices, gross abnormalities,
-                and coherence breaks.</p>
+
+        <div class="vertical-tiers">
+          <article class="tier-row" style="background:#b5dcf4;">
+            <div class="tier-info">
+              <h3>T1: Foundation</h3>
+              <p>Basic modality mismatches in 2×2 grids. E.g., one <strong>MRI scan among CT scans</strong>.</p>
+              <span class="tier-meta">55 positive + 55 negative tasks</span>
             </div>
-            <div style="width:220px;">
-              <img src="assets/tier5.png" alt="T5" style="width:100%; border-radius:8px; box-shadow:var(--shadow-sm);">
-            </div>
+            <div class="tier-img"><img src="assets/example_t1.png" alt="Tier 1 real example"></div>
           </article>
-          <!-- T4 -->
-          <article class="tier-card-v"
-            style="background:#eaddf2; display:flex; align-items:center; padding:1.5rem 2rem; border-radius:16px;">
-            <div style="flex:1;">
-              <h3 style="font-size:1.8rem; margin:0;">T4: Semantics</h3>
-              <p style="margin-top:0.5rem; color:#475569;">Anatomy and viewpoint mismatches plus integrity violations.
-              </p>
+
+          <article class="tier-row" style="background:#c7e6eb;">
+            <div class="tier-info">
+              <h3>T2: Diversity</h3>
+              <p>Broader modality pool with finer intra-class appearance variability in 2×2 grids.</p>
+              <span class="tier-meta">60 positive + 60 negative tasks</span>
             </div>
-            <div style="width:220px;"><img src="assets/negative_control.png" alt="T4"
-                style="width:100%; border-radius:8px; box-shadow:var(--shadow-sm);"></div>
+            <div class="tier-img"><img src="assets/example_t2.png" alt="Tier 2 real example"></div>
           </article>
-          <!-- T3 -->
-          <article class="tier-card-v"
-            style="background:#d4dcf8; display:flex; align-items:center; padding:1.5rem 2rem; border-radius:16px;">
-            <div style="flex:1;">
-              <h3 style="font-size:1.8rem; margin:0;">T3: Scaling</h3>
-              <p style="margin-top:0.5rem; color:#475569;">3x3 grids with many distractors stress systematic comparison.
-              </p>
+
+          <article class="tier-row" style="background:#d4dcf8;">
+            <div class="tier-info">
+              <h3>T3: Scaling</h3>
+              <p>Dense <strong>3×3 grids</strong> with 8 distractors. Systematic comparison is essential.</p>
+              <span class="tier-meta">45 positive + 45 negative tasks</span>
             </div>
-            <div style="width:220px;"><img src="assets/tier3.png" alt="T3"
-                style="width:100%; border-radius:8px; box-shadow:var(--shadow-sm);"></div>
+            <div class="tier-img"><img src="assets/example_t3.png" alt="Tier 3 real example"></div>
           </article>
-          <!-- T2 -->
-          <article class="tier-card-v"
-            style="background:#c7e6eb; display:flex; align-items:center; padding:1.5rem 2rem; border-radius:16px;">
-            <div style="flex:1;">
-              <h3 style="font-size:1.8rem; margin:0;">T2: Diversity</h3>
-              <p style="margin-top:0.5rem; color:#475569;">Finer distinctions across sources with broader appearance
-                variability.</p>
+
+          <article class="tier-row" style="background:#eaddf2;">
+            <div class="tier-info">
+              <h3>T4: Semantics</h3>
+              <p>Anatomy and viewpoint mismatches. E.g., one <strong>abdomen CT among chest X-rays</strong>.</p>
+              <span class="tier-meta">40 positive + 40 negative tasks</span>
             </div>
-            <div style="width:220px;"><img src="assets/samples/tier5.png" alt="T2"
-                style="width:100%; border-radius:8px; box-shadow:var(--shadow-sm);"></div>
+            <div class="tier-img"><img src="assets/example_t4.png" alt="Tier 4 real example"></div>
           </article>
-          <!-- T1 -->
-          <article class="tier-card-v"
-            style="background:#b5dcf4; display:flex; align-items:center; padding:1.5rem 2rem; border-radius:16px; position:relative;">
-            <div style="flex:1;">
-              <h3 style="font-size:1.8rem; margin:0;">T1: Foundation</h3>
-              <p style="margin-top:0.5rem; color:#475569;">Basic orientation and modality mismatches in 2x2 grids.</p>
+
+          <article class="tier-row" style="background:#fce7e7;">
+            <div class="tier-info">
+              <h3>T5: Triage</h3>
+              <p>High-saliency clinical failures: <strong>surgical hardware, fractures, gross pathology</strong>.</p>
+              <span class="tier-meta">35 positive + 35 negative tasks</span>
             </div>
-            <div style="width:220px; position:relative;">
-              <img src="assets/tier1.png" alt="T1"
-                style="width:100%; border-radius:8px; box-shadow:var(--shadow-sm); position:relative; z-index:2;">
-            </div>
-            <!-- Modality indicators at bottom simulating the arrows -->
-            <div
-              style="position:absolute; bottom:-40px; left:0; right:0; display:flex; justify-content:space-around; align-items:flex-end;">
-              <!-- We can't easily reproduce complex arrow lines, so we keep it clean inside the card -->
-            </div>
+            <div class="tier-img"><img src="assets/example_t5.png" alt="Tier 5 real example"></div>
           </article>
         </div>
-      </div>
       </div>
     </section>
 
+    <!-- ────────────────────── RESULTS ────────────────────── -->
     <section class="section section-alt" id="results">
       <div class="container reveal">
         <div class="section-heading center">
           <p class="section-label">Results</p>
           <h2>Current VLMs remain unreliable gatekeepers</h2>
-          <p>
-            Across 17 evaluated VLMs, performance remains uneven: false alarms on clean inputs, degradation under larger
-            candidate sets, and strong interface sensitivity persist across model families.
-          </p>
+          <p>Across 17 VLMs spanning general, medical, and proprietary families, performance is strikingly uneven.</p>
         </div>
 
+        <!-- Headline metrics -->
         <div class="metric-grid">
-          <article class="metric-card">
-            <span class="metric-label">Best overall model</span>
-            <strong>63.2%</strong>
-            <p>Qwen2.5-VL-7B average accuracy</p>
+          <article class="metric-card"><span class="metric-label">Best open-source</span><strong>63.2%</strong>
+            <p>Qwen2.5-VL-7B</p>
           </article>
-          <article class="metric-card">
-            <span class="metric-label">Best negative accuracy</span>
-            <strong>70.7%</strong>
-            <p>Qwen2.5-VL-7B on clean, no-outlier grids</p>
+          <article class="metric-card"><span class="metric-label">Best medical</span><strong>56.6%</strong>
+            <p>Lingshu-7B</p>
           </article>
-          <article class="metric-card">
-            <span class="metric-label">Best proprietary average</span>
-            <strong>55.5%</strong>
+          <article class="metric-card"><span class="metric-label">Best proprietary</span><strong>55.5%</strong>
             <p>Gemini-2.0-Flash</p>
           </article>
-          <article class="metric-card">
-            <span class="metric-label">Human expert</span>
-            <strong>88.4%</strong>
-            <p>Average accuracy across all tasks</p>
+          <article class="metric-card"><span class="metric-label">Human expert</span><strong>88.4%</strong>
+            <p>Across all tasks</p>
           </article>
         </div>
 
-        <div class="results-layout">
-          <div class="results-copy">
-            <article class="insight-card">
-              <h3>T3 is the failure point</h3>
-              <p>Performance consistently drops when scaling from 2×2 to 3×3, suggesting that many models rely on a few
-                salient cues rather than exhaustive comparison across candidates.</p>
-            </article>
-            <article class="insight-card">
-              <h3>Multiple-choice can overestimate capability</h3>
-              <p>Several models are much stronger on Referring MCQ than on Referring Open, indicating that option
-                selection is easier than grounded description generation.</p>
-            </article>
-            <article class="insight-card">
-              <h3>Negative controls matter</h3>
-              <p>Some models still collapse on clean grids, showing an “always-find-something” bias that is unacceptable
-                for pre-diagnostic gatekeeping.</p>
-            </article>
-          </div>
+        <!-- Tab switcher -->
+        <div class="table-tabs" id="resultTabs">
+          <button class="table-tab active" data-tab="task">Per-Task Accuracy</button>
+          <button class="table-tab" data-tab="tier">Per-Tier Accuracy</button>
+        </div>
 
-          <div class="leaderboard-card">
-            <h3>Selected leaderboard</h3>
-            <table class="leaderboard">
+        <!-- Table 2: Per-task -->
+        <div class="table-panel active" id="panel-task">
+          <div class="results-table-wrap">
+            <p class="table-caption">Tasks A–E correspond to Detection MCQ, Detection Open, Referring MCQ, Referring
+              Open, and Visual Referring. Pos(+)/Neg(−) = accuracy on positive/negative samples.</p>
+            <table class="data-table">
               <thead>
                 <tr>
-                  <th>Group</th>
                   <th>Model</th>
+                  <th>Task-A</th>
+                  <th>Task-B</th>
+                  <th>Task-C</th>
+                  <th>Task-D</th>
+                  <th>Task-E</th>
+                  <th>Pos(+)</th>
+                  <th>Neg(−)</th>
                   <th>Avg</th>
-                  <th>Neg(-)</th>
                 </tr>
               </thead>
               <tbody>
+                <tr class="group-header">
+                  <td colspan="9">General Open-Source VLMs</td>
+                </tr>
                 <tr>
-                  <td>General</td>
+                  <td>LLaVA-1.5-7B</td>
+                  <td>40.4</td>
+                  <td>22.3</td>
+                  <td>22.1</td>
+                  <td>35.7</td>
+                  <td>50.0</td>
+                  <td>37.5</td>
+                  <td>31.9</td>
+                  <td>34.3</td>
+                </tr>
+                <tr>
+                  <td>Qwen2-VL-7B</td>
+                  <td>32.3</td>
+                  <td>49.5</td>
+                  <td>72.7</td>
+                  <td>25.1</td>
+                  <td>53.1</td>
+                  <td>56.3</td>
+                  <td>28.7</td>
+                  <td>45.4</td>
+                </tr>
+                <tr>
                   <td>Qwen2.5-VL-7B</td>
-                  <td><strong>63.2</strong></td>
-                  <td><strong>70.7</strong></td>
+                  <td class="best">58.7</td>
+                  <td class="best">82.1</td>
+                  <td>75.3</td>
+                  <td>29.7</td>
+                  <td class="best">65.1</td>
+                  <td>60.9</td>
+                  <td class="best">70.7</td>
+                  <td class="best">63.2</td>
                 </tr>
                 <tr>
-                  <td>Medical</td>
-                  <td>Lingshu-7B</td>
-                  <td><strong>56.6</strong></td>
-                  <td>43.8</td>
+                  <td>Qwen3-VL-8B</td>
+                  <td>31.2</td>
+                  <td>32.7</td>
+                  <td class="best">80.8</td>
+                  <td class="best">38.7</td>
+                  <td>52.9</td>
+                  <td class="best">68.9</td>
+                  <td>2.9</td>
+                  <td>44.0</td>
                 </tr>
                 <tr>
-                  <td>Medical (best Neg)</td>
+                  <td>InternVL2.5-8B</td>
+                  <td>56.3</td>
+                  <td>56.3</td>
+                  <td>69.7</td>
+                  <td>26.8</td>
+                  <td>51.7</td>
+                  <td>59.7</td>
+                  <td>42.5</td>
+                  <td>51.9</td>
+                </tr>
+                <tr>
+                  <td>InternVL3-8B</td>
+                  <td>38.5</td>
+                  <td>43.6</td>
+                  <td>80.4</td>
+                  <td>27.6</td>
+                  <td>50.2</td>
+                  <td>64.6</td>
+                  <td>16.6</td>
+                  <td>45.9</td>
+                </tr>
+                <tr>
+                  <td>Pixtral-12B</td>
+                  <td>31.0</td>
+                  <td>22.5</td>
+                  <td>76.6</td>
+                  <td>26.3</td>
+                  <td>51.9</td>
+                  <td>59.5</td>
+                  <td>5.3</td>
+                  <td>39.0</td>
+                </tr>
+                <tr class="group-header">
+                  <td colspan="9">Medical Open-Source VLMs</td>
+                </tr>
+                <tr>
+                  <td>LLaVA-Med-7B</td>
+                  <td>10.0</td>
+                  <td>36.8</td>
+                  <td>21.2</td>
+                  <td>23.4</td>
+                  <td>50.0</td>
+                  <td>37.1</td>
+                  <td>17.5</td>
+                  <td>28.0</td>
+                </tr>
+                <tr>
+                  <td>Fleming-8B</td>
+                  <td>26.8</td>
+                  <td>23.8</td>
+                  <td>78.3</td>
+                  <td>23.8</td>
+                  <td>50.0</td>
+                  <td>57.4</td>
+                  <td>5.3</td>
+                  <td>37.9</td>
+                </tr>
+                <tr>
                   <td>MedGemma1.5-4B-IT</td>
+                  <td>23.6</td>
+                  <td class="best">86.1</td>
+                  <td>43.4</td>
+                  <td>19.5</td>
+                  <td class="best">66.6</td>
+                  <td>44.6</td>
+                  <td class="best">64.1</td>
                   <td>49.7</td>
-                  <td><strong>64.1</strong></td>
                 </tr>
                 <tr>
-                  <td>Proprietary</td>
-                  <td>Gemini-2.0-Flash</td>
-                  <td><strong>55.5</strong></td>
-                  <td>25.6</td>
+                  <td>Lingshu-7B</td>
+                  <td class="best">39.3</td>
+                  <td>78.5</td>
+                  <td class="best">79.5</td>
+                  <td class="best">26.8</td>
+                  <td>61.9</td>
+                  <td class="best">66.8</td>
+                  <td>43.8</td>
+                  <td class="best">56.6</td>
                 </tr>
-                <tr class="human-row">
-                  <td>Human</td>
-                  <td>Expert</td>
-                  <td><strong>88.4</strong></td>
-                  <td><strong>95.7</strong></td>
+                <tr class="group-header">
+                  <td colspan="9">Proprietary VLMs</td>
+                </tr>
+                <tr>
+                  <td>Gemini-2.0-Flash</td>
+                  <td>54.2</td>
+                  <td>42.7</td>
+                  <td class="best">85.9</td>
+                  <td class="best">35.7</td>
+                  <td class="best">69.3</td>
+                  <td class="best">75.4</td>
+                  <td>25.6</td>
+                  <td class="best">55.5</td>
+                </tr>
+                <tr>
+                  <td>Gemini-2.5-Flash</td>
+                  <td class="best">67.2</td>
+                  <td>45.5</td>
+                  <td>80.4</td>
+                  <td>31.9</td>
+                  <td>55.9</td>
+                  <td>74.1</td>
+                  <td class="best">26.3</td>
+                  <td>54.4</td>
+                </tr>
+                <tr>
+                  <td>GPT-4o</td>
+                  <td>47.2</td>
+                  <td class="best">50.4</td>
+                  <td>62.8</td>
+                  <td>26.3</td>
+                  <td>61.7</td>
+                  <td>68.0</td>
+                  <td>22.7</td>
+                  <td>48.4</td>
+                </tr>
+                <tr>
+                  <td>GPT-4.1-nano</td>
+                  <td>25.3</td>
+                  <td>16.8</td>
+                  <td>26.3</td>
+                  <td>18.3</td>
+                  <td>55.1</td>
+                  <td>34.9</td>
+                  <td>21.4</td>
+                  <td>28.3</td>
+                </tr>
+                <tr>
+                  <td>GPT-4.1-mini</td>
+                  <td>41.9</td>
+                  <td>32.9</td>
+                  <td>53.1</td>
+                  <td>29.3</td>
+                  <td>64.2</td>
+                  <td>64.0</td>
+                  <td>13.6</td>
+                  <td>42.7</td>
+                </tr>
+                <tr>
+                  <td>GPT-5-nano</td>
+                  <td>43.4</td>
+                  <td>41.7</td>
+                  <td>82.5</td>
+                  <td>28.9</td>
+                  <td>63.4</td>
+                  <td>73.1</td>
+                  <td>14.8</td>
+                  <td>49.6</td>
+                </tr>
+                <tr class="human-baseline">
+                  <td>Human expert</td>
+                  <td>82.1</td>
+                  <td>85.7</td>
+                  <td>82.1</td>
+                  <td>90.9</td>
+                  <td>92.9</td>
+                  <td>89.4</td>
+                  <td>95.7</td>
+                  <td>88.4</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
+        <!-- Table 3: Per-tier -->
+        <div class="table-panel" id="panel-tier">
+          <div class="results-table-wrap">
+            <p class="table-caption">Per-tier overall accuracy (%). Tiers increase in difficulty from T1 (foundation) to
+              T5 (triage).</p>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>T1</th>
+                  <th>T2</th>
+                  <th>T3</th>
+                  <th>T4</th>
+                  <th>T5</th>
+                  <th>All</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="group-header">
+                  <td colspan="7">General Open-Source VLMs</td>
+                </tr>
+                <tr>
+                  <td>LLaVA-1.5-7B</td>
+                  <td>35.2</td>
+                  <td>40.4</td>
+                  <td>21.6</td>
+                  <td>42.5</td>
+                  <td>36.7</td>
+                  <td>35.2</td>
+                </tr>
+                <tr>
+                  <td>Qwen2-VL-7B</td>
+                  <td>50.9</td>
+                  <td>47.2</td>
+                  <td>37.2</td>
+                  <td>52.8</td>
+                  <td>39.6</td>
+                  <td>45.5</td>
+                </tr>
+                <tr>
+                  <td>Qwen2.5-VL-7B</td>
+                  <td class="best">68.8</td>
+                  <td class="best">67.2</td>
+                  <td class="best">50.5</td>
+                  <td class="best">84.0</td>
+                  <td>49.2</td>
+                  <td class="best">63.9</td>
+                </tr>
+                <tr>
+                  <td>Qwen3-VL-8B</td>
+                  <td>47.2</td>
+                  <td>48.9</td>
+                  <td>34.7</td>
+                  <td>53.4</td>
+                  <td>32.8</td>
+                  <td>43.4</td>
+                </tr>
+                <tr>
+                  <td>InternVL2.5-8B</td>
+                  <td>58.8</td>
+                  <td>56.0</td>
+                  <td>33.0</td>
+                  <td>67.2</td>
+                  <td>49.3</td>
+                  <td>52.8</td>
+                </tr>
+                <tr>
+                  <td>InternVL3-8B</td>
+                  <td>50.4</td>
+                  <td>50.4</td>
+                  <td>37.2</td>
+                  <td>57.1</td>
+                  <td>33.9</td>
+                  <td>45.8</td>
+                </tr>
+                <tr>
+                  <td>Pixtral-12B</td>
+                  <td>45.0</td>
+                  <td>41.4</td>
+                  <td>26.3</td>
+                  <td>43.9</td>
+                  <td>33.8</td>
+                  <td>38.7</td>
+                </tr>
+                <tr class="group-header">
+                  <td colspan="7">Medical Open-Source VLMs</td>
+                </tr>
+                <tr>
+                  <td>LLaVA-Med-7B</td>
+                  <td>32.7</td>
+                  <td>32.5</td>
+                  <td>28.8</td>
+                  <td>26.8</td>
+                  <td>25.0</td>
+                  <td>29.1</td>
+                </tr>
+                <tr>
+                  <td>Fleming-8B</td>
+                  <td>41.8</td>
+                  <td>43.9</td>
+                  <td>29.1</td>
+                  <td>39.0</td>
+                  <td>31.4</td>
+                  <td>37.0</td>
+                </tr>
+                <tr>
+                  <td>MedGemma1.5-4B-IT</td>
+                  <td>59.7</td>
+                  <td>53.7</td>
+                  <td>37.2</td>
+                  <td>53.7</td>
+                  <td class="best">53.5</td>
+                  <td>51.5</td>
+                </tr>
+                <tr>
+                  <td>Lingshu-8B</td>
+                  <td class="best">62.9</td>
+                  <td class="best">64.7</td>
+                  <td class="best">48.8</td>
+                  <td class="best">63.1</td>
+                  <td>46.0</td>
+                  <td class="best">57.1</td>
+                </tr>
+                <tr class="group-header">
+                  <td colspan="7">Proprietary VLMs</td>
+                </tr>
+                <tr>
+                  <td>Gemini-2.0-Flash</td>
+                  <td class="best">59.3</td>
+                  <td class="best">61.0</td>
+                  <td class="best">56.3</td>
+                  <td class="best">66.8</td>
+                  <td>34.6</td>
+                  <td class="best">55.6</td>
+                </tr>
+                <tr>
+                  <td>Gemini-2.5-Flash</td>
+                  <td>59.0</td>
+                  <td>62.7</td>
+                  <td>55.2</td>
+                  <td>62.1</td>
+                  <td class="best">35.0</td>
+                  <td>54.8</td>
+                </tr>
+                <tr>
+                  <td>GPT-4o</td>
+                  <td>54.3</td>
+                  <td>56.0</td>
+                  <td>45.2</td>
+                  <td>59.6</td>
+                  <td>34.6</td>
+                  <td>49.9</td>
+                </tr>
+                <tr>
+                  <td>GPT-4.1-nano</td>
+                  <td>29.3</td>
+                  <td>31.8</td>
+                  <td>20.2</td>
+                  <td>21.8</td>
+                  <td>37.5</td>
+                  <td>30.1</td>
+                </tr>
+                <tr>
+                  <td>GPT-4.1-mini</td>
+                  <td>47.7</td>
+                  <td>52.2</td>
+                  <td>36.1</td>
+                  <td>50.9</td>
+                  <td>33.5</td>
+                  <td>44.1</td>
+                </tr>
+                <tr>
+                  <td>GPT-5-nano</td>
+                  <td>52.5</td>
+                  <td>56.6</td>
+                  <td>46.6</td>
+                  <td>61.2</td>
+                  <td>33.2</td>
+                  <td>50.0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Key Insights -->
+        <div class="insights-grid">
+          <article class="insight-v2 warn">
+            <h3>🚨 Catastrophic negative-control failure</h3>
+            <p>When no outlier exists, most VLMs hallucinate one. Qwen3-VL-8B: <strong>2.9%</strong> on negatives.
+              Humans: <strong>95.7%</strong>.</p>
+          </article>
+          <article class="insight-v2 amber">
+            <h3>📉 T3 is the universal breaking point</h3>
+            <p>Scaling from 2×2 to 3×3 causes steep drops. Qwen2.5-VL drops from <strong>68.8%</strong> (T1) to
+              <strong>50.5%</strong> (T3).</p>
+          </article>
+          <article class="insight-v2">
+            <h3>🔬 Medical fine-tuning ≠ safety</h3>
+            <p>LLaVA-Med-7B averages only <strong>28.0%</strong>, worse than several general-purpose models.</p>
+          </article>
+          <article class="insight-v2 amber">
+            <h3>🎯 MCQ inflates capability</h3>
+            <p>Gemini-2.0-Flash: Task-C <strong>85.9%</strong> vs Task-D <strong>35.7%</strong> — a 50-point gap between
+              MCQ and open formats.</p>
+          </article>
+          <article class="insight-v2 good">
+            <h3>✅ Scale advantages are modest</h3>
+            <p>GPT-5-nano (<strong>49.6%</strong>) nearly matches GPT-4o (<strong>48.4%</strong>).</p>
+          </article>
+          <article class="insight-v2 warn">
+            <h3>⚠️ T5 triage remains unsolved</h3>
+            <p>Even the best model (MedGemma: <strong>53.5%</strong>) fails nearly half the time on clinical hardware
+              detection.</p>
+          </article>
+        </div>
       </div>
     </section>
 
+    <!-- ────────────────────── QUALITATIVE EXAMPLES ────────────────────── -->
     <section class="section" id="qualitative">
       <div class="container reveal">
         <div class="section-heading center">
-          <p class="section-label">Qualitative examples</p>
-          <h2>What failure modes look like</h2>
+          <p class="section-label">Qualitative Examples</p>
+          <h2>Side-by-side: query grids and model predictions</h2>
+          <p>Each example shows the input grid alongside predictions from representative models across different evaluation protocols.</p>
         </div>
-        <div class="gallery-grid">
-          <figure class="gallery-card large shadow-md">
-            <div style="background:#f8fafc; padding:2rem; display:flex; justify-content:center;">
-              <img src="assets/tier5.png" alt="Triage Example"
-                style="max-height:500px; width:100%; object-fit:contain; border-radius:8px; box-shadow:var(--shadow-md);">
-            </div>
-            <figcaption style="padding:1.5rem; background:white; font-size:1.1rem;"><strong>Tier 5 Example:</strong>
-              Identifying highly subtle medical anomalies. Modern VLMs frequently hallucinate non-existent distractors.
-            </figcaption>
-          </figure>
 
-          <figure class="gallery-card large shadow-md">
-            <div style="background:#f8fafc; padding:2rem; display:flex; justify-content:center;">
-              <img src="assets/tier3.png" alt="Scaling Example"
-                style="max-height:500px; width:100%; object-fit:contain; border-radius:8px; box-shadow:var(--shadow-md);">
+        <!-- Example 1: Detection MCQ — Modality mismatch (2×2) -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t1.png" alt="Example 1 grid">
+            <div class="qual-label">Example 1 · Detection MCQ</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Detection MCQ — "Which position contains the outlier? (A/B/C/D/E)"<br>
+              <strong>Ground truth:</strong> Position C (bottom-left) — MRI scan among CT scans.
             </div>
-            <figcaption style="padding:1.5rem; background:white; font-size:1.1rem;"><strong>Tier 3 Example:</strong>
-              Dense 3x3 matrices overwhelm the spatial consistency tracking of state-of-the-art vision models.
-            </figcaption>
-          </figure>
-
-          <figure class="gallery-card large shadow-md">
-            <div style="background:#f8fafc; padding:2rem; display:flex; justify-content:center;">
-              <img src="assets/negative_control.png" alt="Negative control example"
-                style="max-height:500px; width:100%; object-fit:contain; border-radius:8px; box-shadow:var(--shadow-md);">
+            <div class="pred-card correct">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>C (bottom-left)</strong></div>
+              <p class="pred-note">Correctly identifies the MRI scan as the modality outlier.</p>
             </div>
-            <figcaption style="padding:1.5rem; background:white; font-size:1.1rem;"><strong>Negative Control
-                Grid:</strong> All panels are perfectly consistent (No Outlier). Most models fail entirely by strictly
-              predicting an anomaly where none exists.</figcaption>
-          </figure>
+            <div class="pred-card wrong">
+              <div class="pred-model">LLaVA-1.5-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Exhibits strong position bias — always defaults to top-left regardless of content.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Pixtral-12B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (bottom-right)</strong></div>
+              <p class="pred-note">Identifies the correct region but picks the wrong quadrant.</p>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- Example 2: Detection Open — 3×3 dense grid -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t3.png" alt="Example 2 grid">
+            <div class="qual-label">Example 2 · Detection Open</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Detection Open — "Identify the outlier position and explain why it differs."<br>
+              <strong>Ground truth:</strong> Position F (center-right) — MRI among 8 CT scans.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (center-left)</strong></div>
+              <p class="pred-note">Identifies the correct row but picks the wrong column — overwhelmed by the dense 3×3 layout.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen3-VL-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Falls back to default position when uncertain about the dense grid.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Pixtral-12B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">3×3 grids universally expose shallow pattern matching across all model families.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 3: Referring MCQ — Anatomy mismatch -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t4.png" alt="Example 3 grid">
+            <div class="qual-label">Example 3 · Referring MCQ</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Referring MCQ — "Is the described image at position X the outlier? (Yes/No)"<br>
+              <strong>Ground truth:</strong> Bottom-right is an abdomen CT scan among chest X-rays.
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> <strong>Yes</strong> — correctly confirms the referred position</div>
+              <p class="pred-note">Cross-anatomy mismatches are well handled when the model is pointed to the right location.</p>
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Qwen3-VL-8B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> <strong>Yes</strong></div>
+              <p class="pred-note">Anatomy mismatches within the same modality are easier for most models.</p>
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Pixtral-12B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> <strong>Yes</strong></div>
+              <p class="pred-note">Referring MCQ achieves higher accuracy because the model only needs to verify, not locate.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 4: Referring Open — diversified modality -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t2.png" alt="Example 4 grid">
+            <div class="qual-label">Example 4 · Referring Open</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Referring Open — "The image at bottom-right: is it the outlier? Explain."<br>
+              <strong>Ground truth:</strong> Bottom-right is an MRI scan among CT scans.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>B (top-right)</strong></div>
+              <p class="pred-note">Fails under open-ended generation despite succeeding on the MCQ variant of the same task.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">InternVL2.5-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Open-ended protocols reveal weaker grounding than constrained MCQ options.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">LLaVA-Med-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Medical fine-tuning does not help — pure position bias dominates.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 5: Visual Referring — hardware detection -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t5.png" alt="Example 5 grid">
+            <div class="qual-label">Example 5 · Visual Referring</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Visual Referring — the outlier is visually highlighted and the model must confirm or deny.<br>
+              <strong>Ground truth:</strong> Top-right contains surgical hardware/implants among clean chest X-rays.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>C (bottom-left)</strong></div>
+              <p class="pred-note">Fails to localize the metallic implant despite it being visually prominent.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen3-VL-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>C (bottom-left)</strong></div>
+              <p class="pred-note">Consistent failure on triage-level hardware detection across all model families.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Gemini-2.0-Flash</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (bottom-right)</strong></div>
+              <p class="pred-note">Even the best proprietary model cannot reliably detect surgical devices in X-rays.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 6: Detection MCQ — fracture detection -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t5_fx.png" alt="Example 6 grid">
+            <div class="qual-label">Example 6 · Detection MCQ</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Detection MCQ — "Which position contains the outlier?"<br>
+              <strong>Ground truth:</strong> One scan contains a <strong>fracture</strong> among clean X-rays.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4o</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>B (top-right)</strong></div>
+              <p class="pred-note">Fractures require precise structural understanding that current VLMs lack.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Gemini-2.5-Flash</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>C (bottom-left)</strong></div>
+              <p class="pred-note">Pathological subtlety in clean X-ray sets is universally challenging.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Fleming-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Medical VLMs show no advantage on fracture triage over general-purpose models.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 7: Negative Control — no outlier -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_neg.png" alt="Example 7 grid">
+            <div class="qual-label">Example 7 · Negative Control</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Detection MCQ — with option E: "None — all images are the same."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">E — No outlier exists.</span> All panels show the same modality.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Qwen3-VL-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> Predicted: <strong>C (bottom-left)</strong></div>
+              <p class="pred-note">Confidently hallucinates an outlier where none exists — a critical safety failure.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Pixtral-12B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> Predicted: <strong>D (bottom-right)</strong></div>
+              <p class="pred-note">"Always-find-something" bias is catastrophic for pre-diagnostic gatekeeping.</p>
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Qwen2.5-VL-7B</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>E (None)</strong></div>
+              <p class="pred-note">One of few models that can suppress false alarms on clean grids.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 8: 3×3 CT variant — Visual Referring -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/example_t3_ct.png" alt="Example 8 grid">
+            <div class="qual-label">Example 8 · Visual Referring</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Visual Referring — "The highlighted image: is it the clinical outlier?"<br>
+              <strong>Ground truth:</strong> One CT scan differs from the remaining 8 scans in modality.
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">InternVL3-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>E (center)</strong></div>
+              <p class="pred-note">Center bias emerges in 3×3 grids — models fixate on the middle panel by default.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4.1-mini</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Smaller proprietary models revert to position bias on dense visual inputs.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-5-nano</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>G (bottom-left)</strong></div>
+              <p class="pred-note">Even the latest reasoning models struggle with exhaustive 3×3 comparison.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 9: Referring Open — negative control 3×3 -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/negative_control.png" alt="Example 9 grid">
+            <div class="qual-label">Example 9 · Referring Open (Negative)</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Referring Open — "Is the image at the referred position an outlier? Explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No outlier.</span> All images are consistent — model should say "No."
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">Gemini-2.0-Flash</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes, the referred image shows a <strong>different orientation</strong>."</div>
+              <p class="pred-note">Fabricates a visual difference that does not exist — most dangerous hallucination mode.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4o</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes, it appears to be a <strong>different scan type</strong>."</div>
+              <p class="pred-note">Generates plausible-sounding but entirely fabricated clinical reasoning.</p>
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">MedGemma1.5-4B-IT</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "No, all images appear consistent."</div>
+              <p class="pred-note">Best negative control accuracy among medical VLMs (64.1%) — capable of restraint.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 10: Detection MCQ — cross-modality 2×2 -->
+        <div class="qual-row">
+          <div class="qual-image">
+            <img src="assets/tier1.png" alt="Example 10 grid">
+            <div class="qual-label">Example 10 · Detection MCQ</div>
+          </div>
+          <div class="qual-preds">
+            <div class="qual-meta">
+              <strong>Protocol:</strong> Detection MCQ — "Which position contains the outlier? (A/B/C/D/E)"<br>
+              <strong>Ground truth:</strong> One panel differs in imaging modality from the other three.
+            </div>
+            <div class="pred-card correct">
+              <div class="pred-model">Gemini-2.5-Flash</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Accurately locates the modality outlier</div>
+              <p class="pred-note">Proprietary models lead on simple 2×2 modality detection (67.2% on Task-A).</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">LLaVA-Med-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <p class="pred-note">Medical fine-tuning on LLaVA produces the worst overall accuracy (28.0%) in the benchmark.</p>
+            </div>
+            <div class="pred-card wrong">
+              <div class="pred-model">GPT-4.1-nano</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>B (top-right)</strong></div>
+              <p class="pred-note">Smallest proprietary model (28.3% avg) performs comparably to worst medical VLM.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
+    <!-- ────────────────────── DOWNLOADS ────────────────────── -->
     <section class="section section-alt" id="downloads">
       <div class="container reveal">
         <div class="section-heading center">
-          <p class="section-label">Downloads</p>
-          <h2>arXiv and media</h2>
+          <p class="section-label">Resources</p>
+          <h2>arXiv, Data &amp; Code</h2>
         </div>
         <div class="download-grid">
           <a class="download-card" href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">
             <div>
-              <h3>arXiv Pre-print</h3>
-              <p>Read the full benchmark description, methodology, and evaluation.</p>
+              <h3>📄 arXiv Pre-print</h3>
+              <p>Full benchmark description, methodology, and evaluation results.</p>
             </div>
             <span>Open →</span>
           </a>
           <a class="download-card" href="assets/teaser_video.mp4" target="_blank" rel="noopener">
             <div>
-              <h3>Teaser video</h3>
-              <p>Download the short teaser used on the project page.</p>
+              <h3>🎬 Teaser Video</h3>
+              <p>Download the short animated teaser walkthrough.</p>
             </div>
             <span>Play →</span>
           </a>
         </div>
         <div class="citation-box">
           <h3>Citation</h3>
-          <p>Update this block with the final author list and venue after review.</p>
           <pre>@inproceedings{medobvious2026,
-  title   = {MedObvious: Exposing the Medical Moravec's Paradox in VLMs via Clinical Triage},
+  title   = {MedObvious: Exposing the Medical Moravec's Paradox
+             in VLMs via Clinical Triage},
   author  = {Anonymous Authors},
   booktitle = {TBD},
   year    = {2026}
@@ -619,11 +1201,12 @@
     </section>
   </main>
 
+  <!-- ────────────────────── FOOTER ────────────────────── -->
   <footer class="footer">
     <div class="container footer-inner">
       <div>
         <a class="brand footer-brand" href="#top"><span>Med</span>Obvious</a>
-        <p>Pre-diagnostic visual sanity checking for medical vision-language models.</p>
+        <p>Pre-diagnostic visual sanity checking for medical VLMs.</p>
       </div>
       <div class="footer-links">
         <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">arXiv</a>
