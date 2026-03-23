@@ -888,8 +888,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "You are reviewing a 2×2 grid of medical scans. One scan is the clinical outlier.
-              Which position contains the outlier? (A–E)"<br>
+              <strong>Query:</strong> "You are reviewing a 2×2 grid of medical scans. One scan is the clinical outlier — does it differ in modality, anatomy, or pathology from the others? Which position contains the outlier? (A–E)"<br>
               <strong>Ground truth:</strong> C (bottom-left) — MRI scan among CT scans.
             </div>
             <div class="pred-card correct">
@@ -921,8 +920,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "You are a medical imaging expert reviewing a 3×3 grid. Identify the outlier
-              position and briefly explain why it differs."<br>
+              <strong>Query:</strong> "You are a medical imaging expert reviewing a 3×3 grid. Identify the outlier position — does it differ in modality, anatomy, or pathology from the others?"<br>
               <strong>Ground truth:</strong> The MRI scan among 8 CT scans. Explain: different imaging modality.
             </div>
             <div class="pred-card wrong">
@@ -951,8 +949,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "In this 2×2 grid, one scan contains a clinical anomaly (abdomen CT scan). Which
-              position is it? (A–E)"<br>
+              <strong>Query:</strong> "In this 2×2 grid, one scan contains a clinical anomaly (abdomen CT scan) — does it differ in modality, anatomy, or pathology from the others? Which position is it? (A–E)"<br>
               <strong>Ground truth:</strong> D (bottom-right) — abdomen CT among chest X-rays.
             </div>
             <div class="pred-card correct">
@@ -985,8 +982,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "In this 2×2 grid, one image contains a clinical anomaly. State its position and
-              describe the anomaly in one sentence."<br>
+              <strong>Query:</strong> "In this 2×2 grid, one image contains a clinical anomaly — does it differ in modality, anatomy, or pathology from the others? State its position."<br>
               <strong>Ground truth:</strong> Top-left — ultrasound scan among MRI scans.
             </div>
             <div class="pred-card wrong">
@@ -1016,8 +1012,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier —
-              does it differ in modality, anatomy, or pathology from the others? Answer yes or no, then explain."<br>
+              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier — does it differ in modality, anatomy, or pathology from the others? Answer yes or no."<br>
               <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the
               highlighted scan is an MRI among CT scans.
             </div>
@@ -1049,8 +1044,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier —
-              does it differ from the others? Answer yes or no, then explain."<br>
+              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier — does it differ in modality, anatomy, or pathology from the others? Answer yes or no."<br>
               <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — the
               highlighted scan is NOT the outlier. All highlighted images show MRI.
             </div>
@@ -1081,8 +1075,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box in this 3×3 grid highlights one scan. Is this highlighted scan the
-              clinical outlier?"<br>
+              <strong>Query:</strong> "The red box in this 3×3 grid highlights one scan. Is this highlighted scan the clinical outlier — does it differ in modality, anatomy, or pathology from the others?"<br>
               <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the
               highlighted scan is an MRI among CT scans.
             </div>
@@ -1113,9 +1106,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box in this 3×3 medical image grid highlights one scan. Is this
-              highlighted scan the clinical outlier — does it differ from the others? Answer yes or no, then briefly
-              explain."<br>
+              <strong>Query:</strong> "The red box in this 3×3 medical image grid highlights one scan. Is this highlighted scan the clinical outlier — does it differ in modality, anatomy, or pathology from the others? Answer yes or no."<br>
               <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — All images
               show CT scan. No outlier is present.
             </div>
@@ -1146,8 +1137,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "If one scan is the outlier, identify it. If all scans appear consistent, select
-              'None'. (A–J)"<br>
+              <strong>Query:</strong> "If one scan is the outlier — does it differ in modality, anatomy, or pathology from the others? — identify it. If all scans appear consistent, select 'None'. (A–J)"<br>
               <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">J (None)</span> — all
               images show MRI scans. No outlier exists.
             </div>
@@ -1178,7 +1168,7 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box highlights one scan. Is this the clinical outlier?"<br>
+              <strong>Query:</strong> "The red box highlights one scan. Is this the clinical outlier — does it differ in modality, anatomy, or pathology from the others?"<br>
               <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the
               highlighted scan is an abdomen CT among chest X-rays (anatomy mismatch).
             </div>
