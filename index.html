@@ -20,7 +20,9 @@
   <!-- ────────────────────── HEADER ────────────────────── -->
   <header class="site-header" id="top">
     <nav class="nav">
-      <a class="brand" href="#top"><span>Med</span>Obvious</a>
+      <a class="brand" href="#top" aria-label="MedObvious">
+        <img src="assets/logo.png" alt="MedObvious Logo" style="height: 48px; width: auto; mix-blend-mode: multiply;">
+      </a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -1109,8 +1111,11 @@
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box in this 3×3 medical image grid highlights one scan. Is this highlighted scan the clinical outlier — does it differ from the others? Answer yes or no, then briefly explain."<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — All images show CT scan. No outlier is present.
+              <strong>Query:</strong> "The red box in this 3×3 medical image grid highlights one scan. Is this
+              highlighted scan the clinical outlier — does it differ from the others? Answer yes or no, then briefly
+              explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — All images
+              show CT scan. No outlier is present.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Qwen3-VL-8B</div>
@@ -1119,7 +1124,8 @@
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Pixtral-12B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes. The highlighted scan in the red box is an outlier as it shows a chest X-ray with a visible abnormality..."</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes. The highlighted scan in
+                the red box is an outlier as it shows a chest X-ray with a visible abnormality..."</div>
               <p class="pred-note">Hallucinates a detailed physical abnormality despite the uniform grid.</p>
             </div>
             <div class="pred-card wrong">
@@ -1239,7 +1245,10 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div>
-        <a class="brand footer-brand" href="#top"><span>Med</span>Obvious</a>
+        <a class="brand footer-brand" href="#top" aria-label="MedObvious">
+          <img src="assets/logo.png" alt="MedObvious Logo"
+            style="height: 48px; width: auto; mix-blend-mode: multiply; margin-bottom: 0.5rem;">
+        </a>
         <p>Pre-diagnostic visual sanity checking for medical VLMs.</p>
       </div>
       <div class="footer-links">
