@@ -196,13 +196,14 @@
               <div style="flex:1; text-align:center;">
                 <img src="assets/example_t1.png"
                   style="max-width:260px; width:100%; border-radius:10px; box-shadow:var(--shadow-md);"
-                  alt="Tier 1 example grid">
+                  alt="Easy case example grid">
               </div>
               <div style="flex:1.2; text-align:left;">
-                <span class="badge badge-blue">Tier 1 — Foundation</span>
+                <span class="badge badge-green">Easy Case</span>
                 <h2 style="font-size:1.8rem; margin:0.5rem 0 0.8rem;">Modality Mismatch (2×2)</h2>
-                <p style="color:var(--muted); margin-bottom:1rem;">The grid contains 3 CT scans and 1 MRI scan at
-                  <strong>bottom-left</strong>.</p>
+                <p style="color:var(--muted); margin-bottom:1rem;">A 2×2 grid with 3 CT scans and 1 MRI scan at
+                  <strong>bottom-left</strong>. Should be trivial for any expert — most models still fail.
+                </p>
                 <div class="pred-row"><span class="pred-label correct">Qwen2.5-VL ✓</span><span class="pred-answer">"C
                     (bottom-left)"</span></div>
                 <div class="pred-row"><span class="pred-label wrong">LLaVA-1.5 ✗</span><span class="pred-answer">"A
@@ -220,13 +221,13 @@
               <div style="flex:1; text-align:center;">
                 <img src="assets/example_t3.png"
                   style="max-width:300px; width:100%; border-radius:10px; box-shadow:var(--shadow-md);"
-                  alt="Tier 3 example grid">
+                  alt="Hard case example grid">
               </div>
               <div style="flex:1.2; text-align:left;">
-                <span class="badge badge-blue">Tier 3 — Scaling</span>
+                <span class="badge badge-red">Hard Case</span>
                 <h2 style="font-size:1.8rem; margin:0.5rem 0 0.8rem;">Dense 3×3 Grid</h2>
                 <p style="color:var(--muted); margin-bottom:1rem;">8 CT scans + 1 MRI at position <strong>F
-                    (center-right)</strong>. The scaling overwhelms most models.</p>
+                    (center-right)</strong>. Scaling to 9 panels overwhelms every model tested — all three fail.</p>
                 <div class="pred-row"><span class="pred-label wrong">Qwen2.5-VL ✗</span><span class="pred-answer">"D
                     (center-left)"</span></div>
                 <div class="pred-row"><span class="pred-label wrong">Qwen3-VL ✗</span><span class="pred-answer">"A
@@ -244,17 +245,18 @@
               <div style="flex:1; text-align:center;">
                 <img src="assets/example_t5.png"
                   style="max-width:260px; width:100%; border-radius:10px; box-shadow:var(--shadow-md);"
-                  alt="Tier 5 example grid">
+                  alt="Clinical triage example grid">
               </div>
               <div style="flex:1.2; text-align:left;">
-                <span class="badge badge-blue">Tier 5 — Triage</span>
+                <span class="badge badge-red">Clinical Triage</span>
                 <h2 style="font-size:1.8rem; margin:0.5rem 0 0.8rem;">Hardware / Device Detection</h2>
                 <p style="color:var(--muted); margin-bottom:1rem;">One scan contains <strong>surgical hardware</strong>
-                  at <strong>top-right</strong>. The others are clean chest X-rays.</p>
-                <div class="pred-row"><span class="pred-label wrong">Qwen2.5-VL ✗</span><span
-                    class="pred-answer">"C (bottom-left)"</span></div>
-                <div class="pred-row"><span class="pred-label wrong">Qwen3-VL ✗</span><span
-                    class="pred-answer">"C (bottom-left)"</span></div>
+                  at <strong>top-right</strong>. The others are clean chest X-rays. <em>Every single model gets this
+                    wrong.</em></p>
+                <div class="pred-row"><span class="pred-label wrong">Qwen2.5-VL ✗</span><span class="pred-answer">"C
+                    (bottom-left)"</span></div>
+                <div class="pred-row"><span class="pred-label wrong">Qwen3-VL ✗</span><span class="pred-answer">"C
+                    (bottom-left)"</span></div>
                 <div class="pred-row"><span class="pred-label wrong">LLaVA-1.5 ✗</span><span class="pred-answer">"A
                     (top-left)"</span></div>
               </div>
@@ -336,7 +338,7 @@
             <div class="tier-info">
               <h3>T1: Foundation</h3>
               <p>Basic modality mismatches in 2×2 grids. E.g., one <strong>MRI scan among CT scans</strong>.</p>
-              <span class="tier-meta">55 positive + 55 negative tasks</span>
+              <span class="tier-meta">440 tasks (275 positive + 165 negative)</span>
             </div>
             <div class="tier-img"><img src="assets/example_t1.png" alt="Tier 1 real example"></div>
           </article>
@@ -345,7 +347,7 @@
             <div class="tier-info">
               <h3>T2: Diversity</h3>
               <p>Broader modality pool with finer intra-class appearance variability in 2×2 grids.</p>
-              <span class="tier-meta">60 positive + 60 negative tasks</span>
+              <span class="tier-meta">480 tasks (300 positive + 180 negative)</span>
             </div>
             <div class="tier-img"><img src="assets/example_t2.png" alt="Tier 2 real example"></div>
           </article>
@@ -354,7 +356,7 @@
             <div class="tier-info">
               <h3>T3: Scaling</h3>
               <p>Dense <strong>3×3 grids</strong> with 8 distractors. Systematic comparison is essential.</p>
-              <span class="tier-meta">45 positive + 45 negative tasks</span>
+              <span class="tier-meta">360 tasks (225 positive + 135 negative)</span>
             </div>
             <div class="tier-img"><img src="assets/example_t3.png" alt="Tier 3 real example"></div>
           </article>
@@ -363,7 +365,7 @@
             <div class="tier-info">
               <h3>T4: Semantics</h3>
               <p>Anatomy and viewpoint mismatches. E.g., one <strong>abdomen CT among chest X-rays</strong>.</p>
-              <span class="tier-meta">40 positive + 40 negative tasks</span>
+              <span class="tier-meta">320 tasks (200 positive + 120 negative)</span>
             </div>
             <div class="tier-img"><img src="assets/example_t4.png" alt="Tier 4 real example"></div>
           </article>
@@ -372,7 +374,7 @@
             <div class="tier-info">
               <h3>T5: Triage</h3>
               <p>High-saliency clinical failures: <strong>surgical hardware, fractures, gross pathology</strong>.</p>
-              <span class="tier-meta">35 positive + 35 negative tasks</span>
+              <span class="tier-meta">280 tasks (175 positive + 105 negative)</span>
             </div>
             <div class="tier-img"><img src="assets/example_t5.png" alt="Tier 5 real example"></div>
           </article>
@@ -838,7 +840,8 @@
           <article class="insight-v2 amber">
             <h3>📉 T3 is the universal breaking point</h3>
             <p>Scaling from 2×2 to 3×3 causes steep drops. Qwen2.5-VL drops from <strong>68.8%</strong> (T1) to
-              <strong>50.5%</strong> (T3).</p>
+              <strong>50.5%</strong> (T3).
+            </p>
           </article>
           <article class="insight-v2">
             <h3>🔬 Medical fine-tuning ≠ safety</h3>
@@ -868,33 +871,39 @@
         <div class="section-heading center">
           <p class="section-label">Qualitative Examples</p>
           <h2>Side-by-side: query grids and model predictions</h2>
-          <p>Each example shows the input grid with its protocol-specific query alongside predictions from representative models. Visual Referring examples use images with a red bounding box highlighting a specific panel.</p>
+          <p>Each example shows the input grid with its protocol-specific query alongside predictions from
+            representative models. Visual Referring examples use images with a red bounding box highlighting a specific
+            panel.</p>
         </div>
 
         <!-- ═══ Example 1: Detection MCQ — v1 MRI vs CT (2×2) ═══ -->
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/example_t1.png" alt="Example 1">
-            <div class="qual-label">Example 1 · Detection MCQ</div>
+            <div class="qual-label">Detection MCQ</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "You are reviewing a 2×2 grid of medical scans. One scan is the clinical outlier. Which position contains the outlier? (A–E)"<br>
+              <strong>Query:</strong> "You are reviewing a 2×2 grid of medical scans. One scan is the clinical outlier.
+              Which position contains the outlier? (A–E)"<br>
               <strong>Ground truth:</strong> C (bottom-left) — MRI scan among CT scans.
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>C (bottom-left)</strong></div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>C
+                  (bottom-left)</strong></div>
               <p class="pred-note">Correctly identifies the MRI scan as the modality outlier.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">LLaVA-1.5-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A
+                  (top-left)</strong></div>
               <p class="pred-note">Exhibits strong position bias — always defaults to A regardless of content.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Pixtral-12B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D (bottom-right)</strong></div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>D
+                  (bottom-right)</strong></div>
               <p class="pred-note">Picks the wrong quadrant despite the correct region.</p>
             </div>
           </div>
@@ -904,11 +913,12 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/example_t3.png" alt="Example 2">
-            <div class="qual-label">Example 2 · Detection Open</div>
+            <div class="qual-label">Detection Open</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "You are a medical imaging expert reviewing a 3×3 grid. Identify the outlier position and briefly explain why it differs."<br>
+              <strong>Query:</strong> "You are a medical imaging expert reviewing a 3×3 grid. Identify the outlier
+              position and briefly explain why it differs."<br>
               <strong>Ground truth:</strong> The MRI scan among 8 CT scans. Explain: different imaging modality.
             </div>
             <div class="pred-card wrong">
@@ -933,26 +943,31 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/example_t4.png" alt="Example 3">
-            <div class="qual-label">Example 3 · Referring MCQ</div>
+            <div class="qual-label">Referring MCQ</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "In this 2×2 grid, one scan contains a clinical anomaly (abdomen CT scan). Which position is it? (A–E)"<br>
+              <strong>Query:</strong> "In this 2×2 grid, one scan contains a clinical anomaly (abdomen CT scan). Which
+              position is it? (A–E)"<br>
               <strong>Ground truth:</strong> D (bottom-right) — abdomen CT among chest X-rays.
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong></div>
-              <p class="pred-note">Referring MCQ gives a text hint about the anomaly type, making it easier to verify.</p>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong>
+              </div>
+              <p class="pred-note">Referring MCQ gives a text hint about the anomaly type, making it easier to verify.
+              </p>
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen3-VL-8B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong></div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong>
+              </div>
               <p class="pred-note">Cross-anatomy mismatches are easier when the anomaly type is described.</p>
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Pixtral-12B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong></div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>D</strong>
+              </div>
               <p class="pred-note">Referring MCQ typically achieves higher accuracy than detection protocols.</p>
             </div>
           </div>
@@ -962,16 +977,18 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/qual_grid_v2_us.png" alt="Example 4">
-            <div class="qual-label">Example 4 · Referring Open</div>
+            <div class="qual-label">Referring Open</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "In this 2×2 grid, one image contains a clinical anomaly. State its position and describe the anomaly in one sentence."<br>
+              <strong>Query:</strong> "In this 2×2 grid, one image contains a clinical anomaly. State its position and
+              describe the anomaly in one sentence."<br>
               <strong>Ground truth:</strong> Top-left — ultrasound scan among MRI scans.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">InternVL2.5-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Incorrectly describes the anomaly</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Incorrectly describes the anomaly
+              </div>
               <p class="pred-note">Open-ended generation reveals weaker grounding than constrained MCQ options.</p>
             </div>
             <div class="pred-card wrong">
@@ -991,21 +1008,25 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/qual_vis_pos_v1.png" alt="Example 5 — Visual Referring with red box">
-            <div class="qual-label">Example 5 · Visual Referring (Positive)</div>
+            <div class="qual-label">Visual Referring (Positive)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier — does it differ in modality, anatomy, or pathology from the others? Answer yes or no, then explain."<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan is an MRI among CT scans.
+              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier —
+              does it differ in modality, anatomy, or pathology from the others? Answer yes or no, then explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the
+              highlighted scan is an MRI among CT scans.
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes, the highlighted scan is MRI."</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes, the highlighted scan is
+                MRI."</div>
               <p class="pred-note">When pointed directly at the outlier, the model can confirm differing modality.</p>
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">LLaVA-1.5-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, all images appear consistent."</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, all images appear consistent."
+              </div>
               <p class="pred-note">Fails to recognize the modality difference even when the outlier is highlighted.</p>
             </div>
             <div class="pred-card wrong">
@@ -1020,12 +1041,14 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/qual_vis_neg_v1.png" alt="Example 6 — Visual Referring negative">
-            <div class="qual-label">Example 6 · Visual Referring (Negative)</div>
+            <div class="qual-label">Visual Referring (Negative)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier — does it differ from the others? Answer yes or no, then explain."<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — the highlighted scan is NOT the outlier. All highlighted images show MRI.
+              <strong>Query:</strong> "The red box highlights one scan. Is this highlighted scan the clinical outlier —
+              does it differ from the others? Answer yes or no, then explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — the
+              highlighted scan is NOT the outlier. All highlighted images show MRI.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Qwen3-VL-8B</div>
@@ -1039,37 +1062,9 @@
             </div>
             <div class="pred-card correct">
               <div class="pred-model">MedGemma1.5-4B-IT</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "No, the highlighted scan is consistent."</div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "No, the highlighted scan is
+                consistent."</div>
               <p class="pred-note">Best negative control accuracy among medical VLMs — capable of restraint.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- ═══ Example 7: Visual Referring (Positive) — v5 Hardware ═══ -->
-        <div class="qual-row">
-          <div class="qual-image">
-            <img src="assets/qual_vis_pos_v5.png" alt="Example 7 — Visual Referring T5 hardware">
-            <div class="qual-label">Example 7 · Visual Referring (Positive)</div>
-          </div>
-          <div class="qual-preds">
-            <div class="qual-meta">
-              <strong>Query:</strong> "The red box highlights one scan. Is this the clinical outlier?"<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan contains surgical hardware/implants, others are clean CXRs.
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
-              <p class="pred-note">Fails to identify surgical hardware even when the panel is directly highlighted.</p>
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">Gemini-2.0-Flash</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, appears normal."</div>
-              <p class="pred-note">Even the best proprietary model cannot reliably detect surgical devices.</p>
-            </div>
-            <div class="pred-card wrong">
-              <div class="pred-model">GPT-4o</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
-              <p class="pred-note">Triage-level hardware detection remains universally unsolved.</p>
             </div>
           </div>
         </div>
@@ -1078,16 +1073,19 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/qual_vis_pos_v3.png" alt="Example 8 — Visual Referring 3×3">
-            <div class="qual-label">Example 8 · Visual Referring (3×3)</div>
+            <div class="qual-label">Visual Referring (3×3)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "The red box in this 3×3 grid highlights one scan. Is this highlighted scan the clinical outlier?"<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan is an MRI among CT scans.
+              <strong>Query:</strong> "The red box in this 3×3 grid highlights one scan. Is this highlighted scan the
+              clinical outlier?"<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the
+              highlighted scan is an MRI among CT scans.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">InternVL3-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, the highlighted image is consistent."</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No, the highlighted image is
+                consistent."</div>
               <p class="pred-note">Dense 3×3 grids make it harder to compare even when the outlier is highlighted.</p>
             </div>
             <div class="pred-card wrong">
@@ -1103,31 +1101,31 @@
           </div>
         </div>
 
-        <!-- ═══ Example 9: Detection MCQ — v5 fracture ═══ -->
+        <!-- ═══ Example 9: Visual Referring (Negative) — v3 3×3 ═══ -->
         <div class="qual-row">
           <div class="qual-image">
-            <img src="assets/qual_grid_v5_fx.png" alt="Example 9">
-            <div class="qual-label">Example 9 · Detection MCQ</div>
+            <img src="assets/v3_ct_scan_2_vis_neg.png" alt="Example 9 — Visual Referring negative">
+            <div class="qual-label">Visual Referring (Negative)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "Which position contains the outlier? (A–E)"<br>
-              <strong>Ground truth:</strong> D (bottom-right) — contains a bone fracture among normal X-rays.
+              <strong>Query:</strong> "The red box in this 3×3 medical image grid highlights one scan. Is this highlighted scan the clinical outlier — does it differ from the others? Answer yes or no, then briefly explain."<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">No</span> — All images show CT scan. No outlier is present.
             </div>
             <div class="pred-card wrong">
-              <div class="pred-model">GPT-4o</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>B (top-right)</strong></div>
-              <p class="pred-note">Fractures require precise structural understanding that current VLMs lack.</p>
+              <div class="pred-model">Qwen3-VL-8B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes"</div>
+              <p class="pred-note">Incorrectly flags a perfectly consistent 3×3 negative control as an outlier.</p>
             </div>
             <div class="pred-card wrong">
-              <div class="pred-model">Gemini-2.5-Flash</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>C (bottom-left)</strong></div>
-              <p class="pred-note">Pathological subtlety in clean X-ray sets is universally challenging.</p>
+              <div class="pred-model">Pixtral-12B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes. The highlighted scan in the red box is an outlier as it shows a chest X-ray with a visible abnormality..."</div>
+              <p class="pred-note">Hallucinates a detailed physical abnormality despite the uniform grid.</p>
             </div>
             <div class="pred-card wrong">
-              <div class="pred-model">Fleming-8B</div>
-              <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> Predicted: <strong>A (top-left)</strong></div>
-              <p class="pred-note">Medical VLMs show no advantage on fracture triage.</p>
+              <div class="pred-model">LLaVA-1.5-7B</div>
+              <div class="pred-detail"><span class="pred-tag wrong">✗ Hallucinated</span> "Yes"</div>
+              <p class="pred-note">Shows strong "always-find-something" bias triggered by the bounding box.</p>
             </div>
           </div>
         </div>
@@ -1136,12 +1134,14 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/qual_neg_v3.png" alt="Example 10">
-            <div class="qual-label">Example 10 · Negative Control (3×3)</div>
+            <div class="qual-label">Negative Control (3×3)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
-              <strong>Query:</strong> "If one scan is the outlier, identify it. If all scans appear consistent, select 'None'. (A–J)"<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">J (None)</span> — all images show MRI scans. No outlier exists.
+              <strong>Query:</strong> "If one scan is the outlier, identify it. If all scans appear consistent, select
+              'None'. (A–J)"<br>
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">J (None)</span> — all
+              images show MRI scans. No outlier exists.
             </div>
             <div class="pred-card wrong">
               <div class="pred-model">Gemini-2.0-Flash</div>
@@ -1155,7 +1155,8 @@
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>J (None)</strong></div>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> Predicted: <strong>J
+                  (None)</strong></div>
               <p class="pred-note">One of few models capable of correctly suppressing false alarms on 3×3 grids.</p>
             </div>
           </div>
@@ -1165,17 +1166,20 @@
         <div class="qual-row">
           <div class="qual-image">
             <img src="assets/qual_vis_pos_v4.png" alt="Example 11 — Visual Referring anatomy">
-            <div class="qual-label">Example 11 · Visual Referring (Positive)</div>
+            <div class="qual-label">Visual Referring (Positive)</div>
           </div>
           <div class="qual-preds">
             <div class="qual-meta">
               <strong>Query:</strong> "The red box highlights one scan. Is this the clinical outlier?"<br>
-              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the highlighted scan is an abdomen CT among chest X-rays (anatomy mismatch).
+              <strong>Ground truth:</strong> <span style="color:var(--emerald); font-weight:700;">Yes</span> — the
+              highlighted scan is an abdomen CT among chest X-rays (anatomy mismatch).
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Gemini-2.5-Flash</div>
-              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes, this is an abdominal scan."</div>
-              <p class="pred-note">Proprietary models perform best on visual referring with clear anatomy differences.</p>
+              <div class="pred-detail"><span class="pred-tag correct">✓ Correct</span> "Yes, this is an abdominal scan."
+              </div>
+              <p class="pred-note">Proprietary models perform best on visual referring with clear anatomy differences.
+              </p>
             </div>
             <div class="pred-card correct">
               <div class="pred-model">Qwen2.5-VL-7B</div>
@@ -1185,7 +1189,8 @@
             <div class="pred-card wrong">
               <div class="pred-model">LLaVA-Med-7B</div>
               <div class="pred-detail"><span class="pred-tag wrong">✗ Wrong</span> "No"</div>
-              <p class="pred-note">Medical fine-tuning on LLaVA produces the worst accuracy (28.0%) across all protocols.</p>
+              <p class="pred-note">Medical fine-tuning on LLaVA produces the worst accuracy (28.0%) across all
+                protocols.</p>
             </div>
           </div>
         </div>
@@ -1208,7 +1213,7 @@
             </div>
             <span>Open →</span>
           </a>
-          <a class="download-card" href="assets/teaser_video.mp4" target="_blank" rel="noopener">
+          <a class="download-card" href="#teaser" target="_blank" rel="noopener">
             <div>
               <h3>🎬 Teaser Video</h3>
               <p>Download the short animated teaser walkthrough.</p>
