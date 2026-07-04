@@ -30,6 +30,7 @@
       </button>
       <div class="nav-links">
         <a href="#overview">Overview</a>
+        <a href="#try-it">Try It</a>
         <a href="#benchmark">Benchmark</a>
         <a href="#tiers">Tiers</a>
         <a href="#results">Results</a>
@@ -52,6 +53,12 @@
           protocols, and explicit negative controls.
         </p>
 
+        <div class="acceptance-banner" aria-label="Paper accepted at MICCAI 2026">
+          <span class="acceptance-tag">Accepted Paper</span>
+          <strong>MICCAI 2026</strong>
+          <span>Accepted in MICCAI 2026</span>
+        </div>
+
         <!-- Announcement Banner -->
         <div
           style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.05)); border: 2px dashed var(--primary); padding: 1.25rem 1.5rem; border-radius: 12px; margin: 1.5rem 0 2.5rem; box-shadow: 0 4px 12px -2px rgba(14, 165, 233, 0.15);">
@@ -59,9 +66,6 @@
             style="margin: 0 0 0.4rem; font-size: 1.4rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
             🚀 Benchmark Is Available on GitHub!
           </h2>
-          <p style="margin: 0 0 0.6rem; font-size: 1.05rem; color: var(--text); font-weight: 700; line-height: 1.4;">
-            <strong>Note:</strong> The MedObvious paper has been accepted to MICCAI 2026.
-          </p>
           <p style="margin: 0; font-size: 1.05rem; color: var(--text); font-weight: 500; line-height: 1.4;">
             The refined MedObvious benchmark is now released with tasks, images, and metadata.
             <a
@@ -78,6 +82,7 @@
           <a class="btn btn-primary" href="https://arxiv.org/abs/2603.23501" target="_blank" rel="noopener">📄 Read
             arXiv</a>
           <a class="btn btn-secondary" href="#teaser">▶ Watch teaser</a>
+          <a class="btn btn-demo" href="#try-it">🔎 Try Obvious</a>
         </div>
         <ul class="hero-stats" aria-label="Benchmark summary">
           <li><strong>1,880</strong><span>tasks</span></li>
@@ -112,6 +117,46 @@
   </header>
 
   <main>
+
+    <!-- ────────────────────── INTERACTIVE QUIZ ────────────────────── -->
+    <section class="section" id="try-it">
+      <div class="container reveal">
+        <div class="section-heading center">
+          <p class="section-label">Try MedObvious</p>
+          <h2>Can you spot the obvious?</h2>
+          <p>Review each grid, choose the inconsistent panel, or select None when the set is clean. A clinical outlier can differ by modality, anatomy, pathology, or visible device-related findings.</p>
+        </div>
+
+        <div class="quiz-shell" id="obviousQuiz">
+          <div class="quiz-media">
+            <div class="quiz-image-frame">
+              <img id="quizImage" src="" alt="">
+            </div>
+            <div class="quiz-progress-track" aria-hidden="true">
+              <span id="quizProgressBar"></span>
+            </div>
+          </div>
+
+          <div class="quiz-panel">
+            <div class="quiz-topline">
+              <span class="quiz-badge" id="quizBadge"></span>
+              <span class="quiz-counter" id="quizCounter"></span>
+            </div>
+            <h3 id="quizTitle"></h3>
+            <p class="quiz-prompt" id="quizQuestion"></p>
+            <div class="quiz-meta" id="quizMeta"></div>
+            <div class="quiz-choices" id="quizChoices" role="group" aria-label="Answer choices"></div>
+            <div class="quiz-feedback" id="quizFeedback" hidden></div>
+            <div class="quiz-actions">
+              <button class="btn btn-primary" id="quizCheck" type="button">Check answer</button>
+              <button class="btn btn-secondary" id="quizNext" type="button" disabled>Next sample</button>
+              <button class="btn btn-secondary quiz-reset" id="quizReset" type="button">Restart</button>
+            </div>
+            <div class="quiz-score" id="quizScore"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ────────────────────── OVERVIEW ────────────────────── -->
     <section class="section section-alt" id="overview">
@@ -1252,6 +1297,13 @@
               <p>Download the short animated teaser walkthrough.</p>
             </div>
             <span>Play →</span>
+          </a>
+          <a class="download-card" href="#try-it">
+            <div>
+              <h3>🔎 Interactive Demo</h3>
+              <p>Try ten MedObvious samples and test whether you can spot the clinical outlier.</p>
+            </div>
+            <span>Try →</span>
           </a>
         </div>
         <div class="citation-box">
